@@ -1,0 +1,22 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+## Uncomment and set this to only include directories you want to watch
+directories %w(lib config test) \
+ .select{|d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist")}
+
+guard :shell do
+  watch(/(lib|test)\/(.*).rb/) do |m|
+    test_file = convert_path(m[0])
+    puts "Running test: #{test_file}"
+    `bin/qt #{test_file}`
+  end
+end
+
+def convert_path(path)
+  if path.end_with?("test.rb")
+    path
+  else
+    path.sub("lib", "test").sub(/\.rb$/, ".test.rb")
+  end
+end
