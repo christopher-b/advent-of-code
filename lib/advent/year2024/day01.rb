@@ -15,12 +15,10 @@ module Advent
       end
 
       def lists
-        @lists ||= build_lists
-      end
-
-      def build_lists
-        list1, list2 = lines.map { |line| line.split.map(&:to_i) }.transpose
-        [list1.sort!, list2.sort!]
+        @lists ||= begin
+          list1, list2 = lines.map { |line| line.split.map(&:to_i) }.transpose
+          [list1.sort!, list2.sort!]
+        end
       end
 
       def distance(list1, list2)

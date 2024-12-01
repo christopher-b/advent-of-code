@@ -10,7 +10,7 @@ module Advent
 
     desc "go YEAR DAY", "Run the challenge for the specified year and day"
     def go(year, day)
-      puts "Running challenge for #{year} #{day}"
+      puts "Running challenge for #{year} Day #{day}"
       execution_time = Benchmark.realtime do
         DayInfo.new(year:, day:).run_challenge
       end
