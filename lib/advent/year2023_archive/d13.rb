@@ -10,16 +10,15 @@ class Advent
     end
 
     def part_1
-
       # 35143 is too high
       # 29681 is loo low
       @patterns.each do |p|
         next unless p.vertical_lines.size > 1 || p.horizontal_lines.size > 1
         puts p.vertical_lines.size
         puts p.horizontal_lines.size
-        p.lines.first.each_with_index {print _2.to_s(16)}
+        p.lines.first.each_with_index { print _2.to_s(16) }
         puts "\n"
-        p.lines.each {puts _1.join ""}
+        p.lines.each { puts _1.join "" }
         puts "H: #{p.horizontal_lines} V: #{p.vertical_lines} S: #{p.summary}"
         puts "\n\n"
       end

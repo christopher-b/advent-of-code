@@ -62,7 +62,6 @@ class Advent
         end
       end
       count
-
     end
 
     def part_2

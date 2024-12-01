@@ -155,7 +155,6 @@ class Advent
     def self.lines
       @lines
     end
-
   end
 end
 
