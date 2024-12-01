@@ -104,6 +104,7 @@ DEPENDENCIES
   quickdraw!
   ruby-lsp
   standard
+  thor
 
 BUNDLED WITH
    2.5.23
