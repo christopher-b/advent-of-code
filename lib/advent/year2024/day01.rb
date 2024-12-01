@@ -19,15 +19,7 @@ module Advent
       end
 
       def build_lists
-        list1 = []
-        list2 = []
-
-        lines.each do |line|
-          items = line.split
-          list1 << items[0].to_i
-          list2 << items[1].to_i
-        end
-
+        list1, list2 = lines.map { |line| line.split.map(&:to_i) }.transpose
         [list1.sort!, list2.sort!]
       end
 
