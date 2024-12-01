@@ -19,5 +19,25 @@ module Advent
     ensure
       @input_file.rewind
     end
+
+    class << self
+      def get(day)
+        day.challenge_class.new(day.data)
+      end
+
+      def get_with_sample(day)
+        day.challenge_class.new(day.sample_data)
+      end
+
+      def run(day)
+        data = day.data
+        day.challenge_class.new(data).call
+      end
+
+      def run_with_sample(day)
+        data = day.sample_data
+        day.challenge_class.new(data).call
+      end
+    end
   end
 end
