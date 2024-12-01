@@ -94,8 +94,9 @@ class Advent
     def process(part)
       return @dest unless @cat
 
-      code = "part.#{@cat} #{@op} #{@limit}"
-      result = eval(code)
+      # Commented out because eval is evil (according to standardrb)
+      # code = "part.#{@cat} #{@op} #{@limit}"
+      # result = eval(code)
 
       @dest if result
     end

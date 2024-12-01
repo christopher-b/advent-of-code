@@ -28,12 +28,9 @@ class Advent
       # pp "--"
       # pp @location.ranges.sort
 
-
       # seed = @seeds.first
       # loc = location_for_seed(seed)
       # puts "Found location #{loc} for seed #{seed}"
-
-
 
       # more_locations = []
       # @seed_ranges.each do |range|

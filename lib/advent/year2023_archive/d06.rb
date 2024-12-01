@@ -56,7 +56,6 @@ class Advent
         offset += 1 if offset.odd? && offset > 1
         new_index = (dist > target) ? last_index - offset : last_index + offset
 
-
         dist = distance(new_index)
         last_index = new_index
 

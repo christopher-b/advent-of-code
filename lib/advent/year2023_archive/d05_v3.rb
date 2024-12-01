@@ -37,8 +37,6 @@ class Advent
         stop = start + pair[1]
         (start...stop)
       end
-
-      location = 0
       # location = 25320000
       location = 184903631
       loop do

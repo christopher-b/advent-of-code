@@ -83,13 +83,13 @@ class Advent
     def apply_joker_matrix(sig)
       # Modify hand type based on number of jokers
       mod_matrix = [
-        [0,	  1,	  nil,	nil,	nil,	nil],
-        [1,	  3,	  3,	  nil,	nil,	nil],
-        [2,	  4,	  5,	  nil,	nil,	nil],
-        [3,	  5,	  nil,	5,	  nil,	nil],
-        [4,	  nil,	6,	  6,	  nil,	nil],
-        [5,	  6,	  nil,	nil,	6,	  nil],
-        [6,	  6,	  6,	  6,	  6,	  6  ]
+        [0, 1, nil,	nil,	nil,	nil],
+        [1, 3, 3, nil,	nil,	nil],
+        [2, 4, 5, nil,	nil,	nil],
+        [3, 5, nil,	5, nil,	nil],
+        [4, nil,	6, 6, nil,	nil],
+        [5, 6, nil,	nil,	6, nil],
+        [6, 6, 6, 6, 6, 6]
       ]
 
       mod_matrix[sig][j_count]
