@@ -16,6 +16,8 @@ module Advent
 
     def lines
       @input_file.readlines(chomp: true)
+    ensure
+      @input_file.rewind
     end
   end
 end
