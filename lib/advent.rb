@@ -16,4 +16,8 @@ module Advent
       autoload :"Day#{day}", "advent/year2024/day#{day}"
     end
   end
+
+  module Year2099
+    class Day01 < Challenge; end
+  end
 end
