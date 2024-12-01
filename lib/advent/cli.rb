@@ -1,5 +1,6 @@
-require "thor"
+require "benchmark"
 require "logger"
+require "thor"
 
 module Advent
   class Cli < Thor
@@ -10,7 +11,10 @@ module Advent
     desc "go YEAR DAY", "Run the challenge for the specified year and day"
     def go(year, day)
       puts "Running challenge for #{year} #{day}"
-      DayInfo.new(year:, day:).run_challenge
+      execution_time = Benchmark.realtime do
+        DayInfo.new(year:, day:).run_challenge
+      end
+      puts "Execution time: #{execution_time}s"
     end
 
     desc "init YEAR DAY", "Initialize a new day's challenge"
