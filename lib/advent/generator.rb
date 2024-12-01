@@ -1,4 +1,5 @@
 require "fileutils"
+require "open-uri"
 
 module Advent
   class Generator
@@ -8,7 +9,7 @@ module Advent
       @day_info = DayInfo.new(day:, year:)
     end
 
-    def call(logger)
+    def call(logger = Logger.new(nil))
       logger.info "Initializing challenge for #{day_info.year} Day #{day_info.day}"
 
       logger.info "Ensuring year folders exist"
@@ -55,8 +56,47 @@ module Advent
     end
 
     def generate_data
-      FileUtils.touch(day_info.data_path)
       FileUtils.touch(day_info.sample_data_path)
+      downloader.call unless File.exist?(day_info.data_path)
+    end
+
+    def downloader
+      @downloader ||= DataDownloader.new(day_info)
+    end
+  end
+
+  class DataDownloader
+    attr_reader :day_info
+
+    def initialize(day_info)
+      @day_info = day_info
+    end
+
+    def call
+      raise "No session cookie found. Please set AOC_SESSION in env" unless session_cookie
+
+      URI.parse(url).open(headers) do |remote_file|
+        IO.copy_stream(remote_file, destination)
+      end
+    end
+
+    def url
+      @url ||= "https://adventofcode.com/%{year}/day/%{day}/input" % {
+        year: day_info.year,
+        day: day_info.day
+      }
+    end
+
+    def headers
+      {"Cookie" => "session=#{session_cookie}"}
+    end
+
+    def destination
+      day_info.data_path
+    end
+
+    def session_cookie
+      ENV["AOC_SESSION"]
     end
   end
 
@@ -83,8 +123,8 @@ module Advent
     CHALLENGE
 
     TEST = <<~TEST
-      day_info = DayInfo.new(%{year}, %{day})
-      challenge = day_info.challenge_with_sample
+      day_info = Advent::DayInfo.new(%{year}, %{day})
+      challenge = Advent::Challenge.get_with_sample(day_info)
 
       test "part 1" do
         assert challenge.part1 == 0
