@@ -15,6 +15,10 @@ module Advent
       end
 
       def lists
+        @lists ||= build_lists
+      end
+
+      def build_lists
         list1 = []
         list2 = []
 
@@ -32,11 +36,9 @@ module Advent
       end
 
       def similarity(list1, list2)
-        score = 0
-        list1.each do |item|
-          score += item * list2.count(item)
+        list1.reduce(0) do |score, item|
+          score + (item * list2.count(item))
         end
-        score
       end
     end
   end
