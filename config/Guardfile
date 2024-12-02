@@ -9,7 +9,7 @@ guard :shell do
   watch(/(lib|test)\/(.*).rb/) do |m|
     test_file = convert_path(m[0])
     puts "Running test: #{test_file}"
-    `bin/qt #{test_file}`
+    `bin/qt --efficiency #{test_file}`
   end
 end
 
