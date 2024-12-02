@@ -1,2 +1,11 @@
 [tools]
 ruby = "3.3.6"
+
+[tasks.test]
+description = "Run Quickdraw tests"
+run = "bin/qt --efficiency"
+
+[tasks.test-watch]
+# Quickdraw has a watch mode, but it seems to test all files on every change
+description = "Run Quickdraw tests in watch mode"
+run = "bin/guard"
