@@ -1,3 +1,4 @@
+# https://adventofcode.com/2024/day/1
 module Advent
   module Year2024
     class Day01 < Advent::Challenge
