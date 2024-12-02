@@ -4,27 +4,27 @@ module Advent
       Object.const_get "Advent::Year#{year}::Day#{padded_day}"
     end
 
-    def data
-      File.open(data_path, "r")
+    def input
+      File.open(input_path, "r")
     end
 
-    def sample_data
-      File.open(sample_data_path, "r")
+    def sample_input
+      File.open(sample_input_path, "r")
     end
 
-    def data_path
-      "#{data_directory}/#{padded_day}-data.txt"
+    def input_path
+      "#{input_directory}/#{padded_day}-input.txt"
     end
 
-    def sample_data_path
-      "#{data_directory}/#{padded_day}-sample.txt"
+    def sample_input_path
+      "#{input_directory}/#{padded_day}-sample.txt"
     end
 
     def code_directory
       "lib/advent/year#{year}"
     end
 
-    def data_directory
+    def input_directory
       "data/#{year}"
     end
 
