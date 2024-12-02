@@ -17,6 +17,13 @@ module Advent
     end
   end
 
+  module Year2023
+    (1..25).each do |day|
+      day = Advent.pad_day(day)
+      autoload :"Day#{day}", "advent/year2023/day#{day}"
+    end
+  end
+
   module Year2099
     class Day01 < Challenge; end
   end
