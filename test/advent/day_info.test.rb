@@ -9,10 +9,10 @@ test "returns the challenge class" do
   assert day_info.challenge_class == Advent::Year2099::Day01
 end
 
-test "returns the sample data" do
-  assert File === day_info.sample_data
+test "returns the sample input" do
+  assert File === day_info.sample_input
 end
 
-test "returns the data" do
-  assert File === day_info.data
+test "returns the input" do
+  assert File === day_info.input
 end

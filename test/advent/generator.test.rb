@@ -6,7 +6,7 @@ test "downloader URL" do
 end
 
 test "downloader destination" do
-  assert downloader.destination == "data/2099/01-data.txt"
+  assert downloader.destination == "data/2099/01-input.txt"
 end
 
 test "downloader uses ENV for session cookie" do

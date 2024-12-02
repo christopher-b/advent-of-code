@@ -23,14 +23,14 @@ module Advent
       logger.info "Generating test at #{day_info.test_path}"
       generate_test || logger.info { "└─Test already exists" }
 
-      logger.info "Generating input files at #{day_info.data_path} and #{day_info.sample_data_path}"
-      generate_data || logger.info { "└─Input file already exist" }
+      logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
+      generate_input || logger.info { "└─Input file already exist" }
     end
 
     # Ensure the year folders exist
     def ensure_year_folders
       FileUtils.mkdir_p day_info.code_directory
-      FileUtils.mkdir_p day_info.data_directory
+      FileUtils.mkdir_p day_info.input_directory
       FileUtils.mkdir_p day_info.test_directory
     end
 
@@ -54,11 +54,11 @@ module Advent
       true
     end
 
-    # Download the data file if it doesn't exist
-    def generate_data
-      return false if File.exist?(day_info.data_path)
+    # Download the input file if it doesn't exist
+    def generate_input
+      return false if File.exist?(day_info.input_path)
 
-      FileUtils.touch(day_info.sample_data_path)
+      FileUtils.touch(day_info.sample_input_path)
       downloader.call
       true
     end
@@ -95,7 +95,7 @@ module Advent
     end
 
     def destination
-      day_info.data_path
+      day_info.input_path
     end
 
     def session_cookie
