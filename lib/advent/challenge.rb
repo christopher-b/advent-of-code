@@ -14,7 +14,7 @@ module Advent
       @input_file.each_line(...)
     end
 
-    def lines
+    def input_lines
       @input_file.readlines(chomp: true)
     ensure
       @input_file.rewind
