@@ -105,6 +105,7 @@ module Advent
 
   module Templates
     CHALLENGE = <<~CHALLENGE
+      # https://adventofcode.com/%{year}/day/%{day}
       module Advent
         module Year%{year}
           class Day%{day} < Advent::Challenge
@@ -126,6 +127,7 @@ module Advent
     CHALLENGE
 
     TEST = <<~TEST
+      # https://adventofcode.com/%{year}/day/%{day}
       challenge = Advent::Challenge.get_with_sample(year: %{year}, day: %{day})
 
       test "part 1" do
