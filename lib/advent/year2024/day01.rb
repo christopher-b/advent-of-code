@@ -16,7 +16,7 @@ module Advent
 
       def lists
         @lists ||= begin
-          list1, list2 = lines.map { |line| line.split.map(&:to_i) }.transpose
+          list1, list2 = input_lines.map { |line| line.split.map(&:to_i) }.transpose
           [list1.sort!, list2.sort!]
         end
       end

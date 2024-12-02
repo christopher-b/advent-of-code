@@ -24,7 +24,7 @@ test "reads lines to an array" do
   input = StringIO.new("line1\nline2")
   challenge = Advent::Challenge.new(input)
 
-  lines = challenge.lines
+  lines = challenge.input_lines
   assert lines.size == 2
   assert lines.first == "line1"
   assert lines.last == "line2"
