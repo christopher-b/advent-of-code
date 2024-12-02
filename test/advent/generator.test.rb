@@ -1,4 +1,4 @@
-generator = Advent::Generator.new(day: 1, year: 2099)
+generator = Advent::Generator.new(year: 2099, day: 1)
 downloader = generator.downloader
 
 test "downloader URL" do

@@ -21,22 +21,24 @@ module Advent
     end
 
     class << self
-      def get(day)
-        day.challenge_class.new(day.data)
+      def run(year:, day:)
+        day_info = DayInfo.new(year:, day:)
+        day_info.challenge_class.new(day_info.data).call
       end
 
-      def get_with_sample(day)
-        day.challenge_class.new(day.sample_data)
+      def run_with_sample(year: day)
+        day_info = DayInfo.new(year:, day:)
+        day_info.challenge_class.new(day_info.sample_data).call
       end
 
-      def run(day)
-        data = day.data
-        day.challenge_class.new(data).call
+      def get(year:, day:)
+        day_info = DayInfo.new(year:, day:)
+        day_info.challenge_class.new(day_info.data)
       end
 
-      def run_with_sample(day)
-        data = day.sample_data
-        day.challenge_class.new(data).call
+      def get_with_sample(year:, day:)
+        day_info = DayInfo.new(year:, day:)
+        day_info.challenge_class.new(day_info.sample_data)
       end
     end
   end

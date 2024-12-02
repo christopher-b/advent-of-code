@@ -12,8 +12,7 @@ module Advent
     def go(year, day)
       puts "Running challenge for #{year} Day #{day}"
       execution_time = Benchmark.realtime do
-        day = DayInfo.new(year:, day:)
-        Challenge.run(day)
+        Challenge.run(year:, day:)
       end
       puts "Execution time: #{execution_time}s"
     end
@@ -21,7 +20,7 @@ module Advent
     desc "init YEAR DAY", "Initialize a new day's challenge"
     def init(year, day)
       logger = ::Logger.new($stdout)
-      Generator.new(year: year, day: day).call(logger)
+      Generator.new(year:, day:, logger:).call
     end
   end
 end

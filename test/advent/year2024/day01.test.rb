@@ -1,5 +1,4 @@
-day_info = Advent::DayInfo.new(2024, 1)
-challenge = Advent::Challenge.get_with_sample(day_info)
+challenge = Advent::Challenge.get_with_sample(year: 2024, day: 1)
 
 test "part 1" do
   assert challenge.part1 == 11
