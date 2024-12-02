@@ -36,11 +36,11 @@ module Advent
       "test/advent/year#{year}"
     end
 
-    def challenge_file
+    def challenge_path
       "#{code_directory}/day#{padded_day}.rb"
     end
 
-    def test_file
+    def test_path
       "#{test_directory}/day#{padded_day}.test.rb"
     end
   end

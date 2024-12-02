@@ -15,10 +15,10 @@ module Advent
       logger.info "Ensuring year folders exist"
       ensure_year_folders
 
-      logger.info "Generating challenge at #{day_info.challenge_file}"
+      logger.info "Generating challenge at #{day_info.challenge_path}"
       logger.info "Challenge already exists" unless generate_challenge
 
-      logger.info "Generating test at #{day_info.test_file}"
+      logger.info "Generating test at #{day_info.test_path}"
       logger.info "Test already exists" unless generate_test
 
       logger.info "Generating data files at #{day_info.data_path} and #{day_info.sample_data_path}"
@@ -34,7 +34,7 @@ module Advent
 
     # Create the day file if it doesn't exist
     def generate_challenge
-      dest = day_info.challenge_file
+      dest = day_info.challenge_path
       challenge_contents = Templates::CHALLENGE % {year: day_info.year, day: day_info.padded_day}
       if File.exist?(dest)
         false
@@ -45,7 +45,7 @@ module Advent
     end
 
     def generate_test
-      dest = day_info.test_file
+      dest = day_info.test_path
       test_contents = Templates::TEST % {year: day_info.year, day: day_info.day}
       if File.exist?(dest)
         false
