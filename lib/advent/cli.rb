@@ -14,7 +14,7 @@ module Advent
       execution_time = Benchmark.realtime do
         Challenge.run(year:, day:)
       end
-      puts "Execution time: #{execution_time}s"
+      puts "Execution time: #{(execution_time * 1000).round(2)}ms"
     end
 
     desc "init YEAR DAY", "Initialize a new day's challenge"

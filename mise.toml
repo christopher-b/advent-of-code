@@ -9,3 +9,7 @@ run = "bin/qt --efficiency"
 # Quickdraw has a watch mode, but it seems to test all files on every change
 description = "Run Quickdraw tests in watch mode"
 run = "bin/guard"
+
+[tasks.lint]
+description = "Run StandardRB"
+run = "bin/standardrb"

@@ -22,13 +22,11 @@ module Advent
 
     class << self
       def run(year:, day:)
-        day_info = DayInfo.new(year:, day:)
-        day_info.challenge_class.new(day_info.input).call
+        get(year:, day:).call
       end
 
       def run_with_sample(year: day)
-        day_info = DayInfo.new(year:, day:)
-        day_info.challenge_class.new(day_info.sample_input).call
+        get_with_sample(year:, day:).call
       end
 
       def get(year:, day:)
