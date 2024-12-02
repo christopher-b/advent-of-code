@@ -18,13 +18,13 @@ module Advent
       ensure_year_folders
 
       logger.info "Generating challenge at #{day_info.challenge_path}"
-      generate_challenge || logger.info {"└─Challenge already exists"}
+      generate_challenge || logger.info { "└─Challenge already exists" }
 
       logger.info "Generating test at #{day_info.test_path}"
-      generate_test || logger.info {"└─Test already exists"}
+      generate_test || logger.info { "└─Test already exists" }
 
       logger.info "Generating input files at #{day_info.data_path} and #{day_info.sample_data_path}"
-      generate_data || logger.info {"└─Input file already exist"}
+      generate_data || logger.info { "└─Input file already exist" }
     end
 
     # Ensure the year folders exist
