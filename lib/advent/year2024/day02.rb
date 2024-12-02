@@ -37,6 +37,8 @@ module Advent
         end
 
         def safe_with_dampener?
+          return true if safe?
+
           # Brute force it
           levels.each_with_index.any? do |_, index|
             new_levels = levels.dup
