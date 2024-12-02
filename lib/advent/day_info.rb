@@ -4,24 +4,20 @@ module Advent
       Object.const_get "Advent::Year#{year}::Day#{padded_day}"
     end
 
-    def padded_day
-      Advent.pad_day(day)
+    def data
+      File.open(data_path, "r")
+    end
+
+    def sample_data
+      File.open(sample_data_path, "r")
     end
 
     def data_path
       "#{data_directory}/#{padded_day}-data.txt"
     end
 
-    def data
-      File.open(data_path, "r")
-    end
-
     def sample_data_path
       "#{data_directory}/#{padded_day}-sample.txt"
-    end
-
-    def sample_data
-      File.open(sample_data_path, "r")
     end
 
     def code_directory
@@ -42,6 +38,10 @@ module Advent
 
     def test_path
       "#{test_directory}/day#{padded_day}.test.rb"
+    end
+
+    def padded_day
+      Advent.pad_day(day)
     end
   end
 end

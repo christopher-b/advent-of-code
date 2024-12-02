@@ -4,25 +4,27 @@ require "open-uri"
 module Advent
   class Generator
     attr_reader :day_info
+    attr_reader :logger
 
-    def initialize(day:, year:)
-      @day_info = DayInfo.new(day:, year:)
+    def initialize(year:, day:, logger: Logger.new(nil))
+      @day_info = DayInfo.new(year:, day:)
+      @logger = logger
     end
 
-    def call(logger = Logger.new(nil))
+    def call
       logger.info "Initializing challenge for #{day_info.year} Day #{day_info.day}"
 
       logger.info "Ensuring year folders exist"
       ensure_year_folders
 
       logger.info "Generating challenge at #{day_info.challenge_path}"
-      logger.info "Challenge already exists" unless generate_challenge
+      generate_challenge || logger.info {"└─Challenge already exists"}
 
       logger.info "Generating test at #{day_info.test_path}"
-      logger.info "Test already exists" unless generate_test
+      generate_test || logger.info {"└─Test already exists"}
 
-      logger.info "Generating data files at #{day_info.data_path} and #{day_info.sample_data_path}"
-      generate_data
+      logger.info "Generating input files at #{day_info.data_path} and #{day_info.sample_data_path}"
+      generate_data || logger.info {"└─Input file already exist"}
     end
 
     # Ensure the year folders exist
@@ -35,37 +37,38 @@ module Advent
     # Create the day file if it doesn't exist
     def generate_challenge
       dest = day_info.challenge_path
+      return false if File.exist?(dest)
+
       challenge_contents = Templates::CHALLENGE % {year: day_info.year, day: day_info.padded_day}
-      if File.exist?(dest)
-        false
-      else
-        File.write(dest, challenge_contents)
-        true
-      end
+      File.write(dest, challenge_contents)
+      true
     end
 
+    # Create the test file if it doesn't exist
     def generate_test
       dest = day_info.test_path
+      return false if File.exist?(dest)
+
       test_contents = Templates::TEST % {year: day_info.year, day: day_info.day}
-      if File.exist?(dest)
-        false
-      else
-        File.write(dest, test_contents)
-        true
-      end
+      File.write(dest, test_contents)
+      true
     end
 
+    # Download the data file if it doesn't exist
     def generate_data
+      return false if File.exist?(day_info.data_path)
+
       FileUtils.touch(day_info.sample_data_path)
-      downloader.call unless File.exist?(day_info.data_path)
+      downloader.call
+      true
     end
 
     def downloader
-      @downloader ||= DataDownloader.new(day_info)
+      @downloader ||= InputDownloader.new(day_info)
     end
   end
 
-  class DataDownloader
+  class InputDownloader
     attr_reader :day_info
 
     def initialize(day_info)
@@ -123,8 +126,7 @@ module Advent
     CHALLENGE
 
     TEST = <<~TEST
-      day_info = Advent::DayInfo.new(%{year}, %{day})
-      challenge = Advent::Challenge.get_with_sample(day_info)
+      challenge = Advent::Challenge.get_with_sample(year: %{year}, day: %{day})
 
       test "part 1" do
         assert challenge.part1 == 0
