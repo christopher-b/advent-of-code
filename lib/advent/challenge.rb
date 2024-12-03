@@ -12,6 +12,8 @@ module Advent
 
     def each_line(...)
       @input_file.each_line(...)
+    ensure
+      @input_file.rewind
     end
 
     def input_lines
