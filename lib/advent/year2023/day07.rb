@@ -41,7 +41,6 @@ module Advent
           [1, 4],          # Four of a kind
           [5]              # Five of a kind
         ]
-
         JOKER_MATRIX = [
           [0, 1, nil,	nil,	nil,	nil],
           [1, 3, 3, nil,	nil,	nil],
