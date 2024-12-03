@@ -1,5 +1,5 @@
 generator = Advent::Generator.new(year: 2099, day: 1)
-downloader = generator.downloader
+downloader = generator.input_downloader
 
 test "downloader URL" do
   assert downloader.url == "https://adventofcode.com/2099/day/1/input"
