@@ -3,8 +3,7 @@ require "open-uri"
 
 module Advent
   class Generator
-    attr_reader :day_info
-    attr_reader :logger
+    attr_reader :day_info, :logger
 
     def initialize(year:, day:, logger: Logger.new(nil))
       @day_info = DayInfo.new(year:, day:)
@@ -14,73 +13,112 @@ module Advent
     def call
       logger.info "Initializing challenge for #{day_info.year} Day #{day_info.day}"
 
+      prepare_directory_structure
+      generate_challenge unless challenge_exists?
+      generate_test unless test_exists?
+      generate_input unless input_exists?
+
+      # logger.info "Initializing challenge for #{day_info.year} Day #{day_info.day}"
+      #
+      # logger.info "Ensuring year folders exist"
+      # ensure_year_folders
+      #
+      # logger.info "Generating challenge at #{day_info.challenge_path}"
+      # generate_challenge || logger.info { "└─Challenge already exists" }
+      #
+      # logger.info "Generating test at #{day_info.test_path}"
+      # generate_test || logger.info { "└─Test already exists" }
+      #
+      # logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
+      # generate_input || logger.info { "└─Input file already exist" }
+    end
+
+    def prepare_directory_structure
       logger.info "Ensuring year folders exist"
-      ensure_year_folders
-
-      logger.info "Generating challenge at #{day_info.challenge_path}"
-      generate_challenge || logger.info { "└─Challenge already exists" }
-
-      logger.info "Generating test at #{day_info.test_path}"
-      generate_test || logger.info { "└─Test already exists" }
-
-      logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
-      generate_input || logger.info { "└─Input file already exist" }
+      [
+        day_info.code_directory,
+        day_info.input_directory,
+        day_info.test_directory
+      ].each { |dir| FileUtils.mkdir_p(dir) }
     end
 
-    # Ensure the year folders exist
-    def ensure_year_folders
-      FileUtils.mkdir_p day_info.code_directory
-      FileUtils.mkdir_p day_info.input_directory
-      FileUtils.mkdir_p day_info.test_directory
-    end
-
-    # Create the day file if it doesn't exist
+    # Create the challenge file if it doesn't exist
     def generate_challenge
-      dest = day_info.challenge_path
-      return false if File.exist?(dest)
+      challenge_path = day_info.challenge_path
+      logger.info "Generating challenge at #{challenge_path}"
 
-      challenge_contents = Templates::CHALLENGE % {year: day_info.year, day: day_info.padded_day}
-      File.write(dest, challenge_contents)
+      File.write(challenge_path, challenge_template)
       true
     end
 
     # Create the test file if it doesn't exist
     def generate_test
-      dest = day_info.test_path
-      return false if File.exist?(dest)
+      test_path = day_info.test_path
+      logger.info "Generating test at #{test_path}"
 
-      test_contents = Templates::TEST % {year: day_info.year, day: day_info.day}
-      File.write(dest, test_contents)
+      File.write(test_path, test_template)
       true
     end
 
     # Download the input file if it doesn't exist
     def generate_input
-      return false if File.exist?(day_info.input_path)
+      logger.info "Generating input files"
 
       FileUtils.touch(day_info.sample_input_path)
-      downloader.call
+      input_downloader.download
       true
     end
 
-    def downloader
-      @downloader ||= InputDownloader.new(day_info)
+    def challenge_exists?
+      File.exist?(day_info.challenge_path)
+    end
+
+    def test_exists?
+      File.exist?(day_info.test_path)
+    end
+
+    def input_exists?
+      File.exist?(day_info.input_path)
+    end
+
+    def input_downloader
+      @input_downloader ||= InputDownloader.new(day_info, logger)
+    end
+
+    def challenge_template
+      Templates::CHALLENGE % {year: day_info.year, day: day_info.padded_day}
+    end
+
+    def test_template
+      Templates::TEST % {year: day_info.year, day: day_info.day}
     end
   end
 
   class InputDownloader
-    attr_reader :day_info
+    attr_reader :day_info, :logger
 
-    def initialize(day_info)
+    def initialize(day_info, logger)
       @day_info = day_info
+      @logger = logger
     end
 
-    def call
-      raise "No session cookie found. Please set AOC_SESSION in env" unless session_cookie
+    def download
+      validate_session_cookie
 
+      logger.info "Downloading input from #{url}"
       URI.parse(url).open(headers) do |remote_file|
         IO.copy_stream(remote_file, destination)
       end
+    rescue OpenURI::HTTPError => e
+      logger.error "Failed to download input: #{e.message}"
+      raise
+    end
+
+    def validate_session_cookie
+      return if session_cookie
+
+      logger.error "No session cookie found"
+      raise MissingSessionCookieError, "Please set AOC_SESSION in env"
     end
 
     def url
