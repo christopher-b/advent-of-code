@@ -1,6 +1,6 @@
 module Advent
   class Challenge
-    attr_reader :input_file
+    attr_accessor :input_file
 
     def initialize(input_file)
       @input_file = input_file
@@ -16,6 +16,12 @@ module Advent
 
     def input_lines
       @input_file.readlines(chomp: true)
+    ensure
+      @input_file.rewind
+    end
+
+    def input_text
+      @input_file.read
     ensure
       @input_file.rewind
     end
