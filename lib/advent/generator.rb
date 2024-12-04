@@ -17,20 +17,6 @@ module Advent
       generate_challenge unless challenge_exists?
       generate_test unless test_exists?
       generate_input unless input_exists?
-
-      # logger.info "Initializing challenge for #{day_info.year} Day #{day_info.day}"
-      #
-      # logger.info "Ensuring year folders exist"
-      # ensure_year_folders
-      #
-      # logger.info "Generating challenge at #{day_info.challenge_path}"
-      # generate_challenge || logger.info { "└─Challenge already exists" }
-      #
-      # logger.info "Generating test at #{day_info.test_path}"
-      # generate_test || logger.info { "└─Test already exists" }
-      #
-      # logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
-      # generate_input || logger.info { "└─Input file already exist" }
     end
 
     def prepare_directory_structure
@@ -62,7 +48,7 @@ module Advent
 
     # Download the input file if it doesn't exist
     def generate_input
-      logger.info "Generating input files"
+      logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
 
       FileUtils.touch(day_info.sample_input_path)
       input_downloader.download
@@ -147,17 +133,17 @@ module Advent
       module Advent
         module Year%{year}
           class Day%{day} < Advent::Challenge
+            # Explanation here
+
             def call
               puts "Part 1: \#{part1}"
               puts "Part 2: \#{part2}"
             end
 
             def part1
-              0
             end
 
             def part2
-              0
             end
           end
         end
@@ -169,11 +155,13 @@ module Advent
       challenge = Advent::Challenge.get_with_sample(year: %{year}, day: %{day})
 
       test "part 1" do
-        assert challenge.part1 == 0
+        # pp challenge.part1
+        # assert challenge.part1 == 0
       end
 
       test "part 2" do
-        assert challenge.part2 == 0
+        # pp challenge.part2
+        # assert challenge.part2 == 0
       end
     TEST
   end
