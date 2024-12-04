@@ -2,6 +2,9 @@
 module Advent
   module Year2024
     class Day01 < Advent::Challenge
+      # The approach is to transform the two columns of values into arrays.
+      # We can then sort them and apply the appropriate operations.
+
       def call
         puts "Part 1: #{part1}"
         puts "Part 2: #{part2}"

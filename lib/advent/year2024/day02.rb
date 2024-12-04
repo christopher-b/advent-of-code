@@ -2,6 +2,10 @@
 module Advent
   module Year2024
     class Day02 < Advent::Challenge
+      # To check if levels are safe, we generate a list of differences between levels.
+      # If all differences have the same polarity in range, it's safe.
+      # For part 2, we brute force it by removing one level at a time.
+
       def call
         puts "Part 1: #{part1}"
         puts "Part 2: #{part2}"

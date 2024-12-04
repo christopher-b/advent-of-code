@@ -2,6 +2,8 @@
 module Advent
   module Year2024
     class Day03 < Advent::Challenge
+      # We're just doing a bunch of regex matching, with a simple state machine for part 2
+
       def call
         puts "Part 1: #{part1}"
         puts "Part 2: #{part2}"
@@ -13,7 +15,7 @@ module Advent
 
       def part2
         enabled = true
-        # A simple state machine. Only select `mul()` matches when we're in do mode
+        # A simple state machine. Only select `mul()` matches when we're in `do` mode
         matches = more_matches.select do |match|
           case match
           when /mul/ then enabled

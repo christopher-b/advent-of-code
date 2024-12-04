@@ -2,6 +2,12 @@
 module Advent
   module Year2024
     class Day04 < Advent::Challenge
+      # The approach is to generate a set of "vectors", which represent directions that we can scan.
+      # We find the first letter of the given word, then apply the vectors to detect the rest of the word.
+      # For part 1, we find all instances of "XMAS" in the grid.
+      # For part 2, we find all instances of "MAS" in the grid, using only diagonal vectors.
+      # Then we count how many "A"s overlap.
+
       def call
         puts "Part 1: #{part1}"
         puts "Part 2: #{part2}"
