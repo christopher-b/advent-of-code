@@ -4,11 +4,6 @@ module Advent
     class Day03 < Advent::Challenge
       # We're just doing a bunch of regex matching, with a simple state machine for part 2
 
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         calculate_multiplications(mul_matches)
       end

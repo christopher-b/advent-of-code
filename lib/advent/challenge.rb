@@ -7,7 +7,11 @@ module Advent
     end
 
     def call
-      raise NotImplementedError
+      parse_input if respond_to?(:parse_input)
+      <<~OUTPUT
+        Part 1: #{part1}
+        Part 2: #{part2}
+      OUTPUT
     end
 
     def each_line(...)

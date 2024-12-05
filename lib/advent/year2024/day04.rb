@@ -9,11 +9,6 @@ module Advent
       # Then we count how many "A"s overlap.
       # This is not very fast not memory efficient.
 
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         find_word("XMAS", vector_template: vector_set_omni).size
       end

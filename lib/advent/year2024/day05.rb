@@ -15,12 +15,6 @@ module Advent
 
       attr_accessor :rules, :updates
 
-      def call
-        parse_input
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         valid_updates.sum(&:middle)
       end

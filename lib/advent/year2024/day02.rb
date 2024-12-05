@@ -6,11 +6,6 @@ module Advent
       # If all differences have the same polarity in range, it's safe.
       # For part 2, we brute force it by removing one level at a time.
 
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         reports.count(&:safe?)
       end
