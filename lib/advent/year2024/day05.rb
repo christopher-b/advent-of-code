@@ -1,10 +1,17 @@
+require "tsort"
+
 # https://adventofcode.com/2024/day/05
 module Advent
   module Year2024
     class Day05 < Advent::Challenge
-      # We index all rules by both digits, so we can easily find a rule for
-      # a given pair by intersecting the values for each index.
-      # Then we can compare rule with the pair to determine a match
+      # My inital solution involved indexing all rules by both digits, so we could
+      # easily find a rule for a given pair by intersecting the values for each index.
+      # Then we could compare the rule with the pair to determine a match.
+      # This took about 250ms
+      #
+      # However, we can use a topological sort to determine the order of the pages.
+      # The graph is not a DAG, so we can't just sort the whole batch. We sort subsets instead.
+      # This takes about 11ms.
 
       attr_accessor :rules, :updates
 
@@ -15,60 +22,83 @@ module Advent
       end
 
       def part1
-        sum_of_middle(correct_updates)
+        valid_updates.sum(&:middle)
       end
 
       def part2
-        sorted_updates = incorrect_updates.map do |update|
-          update.sort do |a, b|
-            case rule_for(a, b)
-            when [] then 0
-            when [a, b] then -1
-            else 1
-            end
-          end
-        end
-        sum_of_middle(sorted_updates)
+        sorted_invalid_updates.sum(&:middle)
       end
 
-      def correct_updates
-        @correct_updates ||= updates.select do |update|
-          update.combination(2).all? { |a, b| rule_matches?(a, b) }
-        end
+      def valid_updates
+        @valid_updates ||= updates.select(&:valid?)
       end
 
-      def rule_matches?(a, b)
-        rule = rule_for(a, b)
-        rule.empty? || rule == [a, b]
+      def invalid_updates
+        @invalid_updates ||= updates - valid_updates
       end
 
-      def incorrect_updates
-        updates - correct_updates
-      end
-
-      def sum_of_middle(updates)
-        updates.sum { |u| u[u.length / 2] }
-      end
-
-      # Find the rule that matches both a and b
-      # They are indexed by the both numbers, so we can just intersect the arrays
-      def rule_for(a, b)
-        (rules[a] & rules[b]).flatten
+      def sorted_invalid_updates
+        @sorted_invalid_updates ||= invalid_updates.each(&:sort!)
       end
 
       def parse_input
-        @rules = Hash.new { |h, k| h[k] = [] }
-        chunks = input_text.split("\n\n")
+        @rules = []
+        @updates = []
+        raw_rules, raw_updates = input_text.split("\n\n")
 
-        # Index rules on each digit
-        chunks.first.each_line do |line|
-          a, b = line.split("|").map(&:to_i)
-          @rules[a] << [a, b]
-          @rules[b] << [a, b]
+        @rules = raw_rules.lines.map { |line| line.split("|").map(&:to_i) }
+        @updates = raw_updates.lines.map { |line| Update.new(line.split(",").map(&:to_i)) }
+        Update.graph = dependency_graph
+      end
+
+      # Each key contains a set of values that must come after
+      def dependency_graph
+        @dependency_graph ||= rules.each_with_object({}) do |(before, after), graph|
+          graph[before] ||= Set.new
+          graph[after] ||= Set.new
+          graph[before] << after
+        end
+      end
+
+      class Update
+        include Enumerable
+        include TSort
+
+        attr_reader :pages
+
+        def initialize(pages)
+          @pages = pages
         end
 
-        @updates = chunks.last.each_line.map do |line|
-          line.split(",").map(&:to_i)
+        def middle
+          pages[pages.length / 2]
+        end
+
+        def valid?
+          pages.combination(2).none? do |page, later_page|
+            Update.graph[later_page]&.include?(page)
+          end
+        end
+
+        def each(&block)
+          pages.each(&block)
+        end
+
+        def sort!
+          @pages = tsort.reverse & pages
+          self
+        end
+
+        def tsort_each_node(...)
+          (Update.graph.keys & pages).each(...)
+        end
+
+        def tsort_each_child(node, &block)
+          (Update.graph[node] & pages).each(&block)
+        end
+
+        class << self
+          attr_accessor :graph
         end
       end
     end
