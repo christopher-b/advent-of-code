@@ -83,6 +83,7 @@ module Advent
           self
         end
 
+        # We apply the sort only on the subset of pages that are in the graph, because we don't have a DAG
         def tsort_each_node(...)
           (Update.graph.keys & pages).each(...)
         end
