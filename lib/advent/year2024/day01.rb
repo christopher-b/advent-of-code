@@ -5,11 +5,6 @@ module Advent
       # The approach is to transform the two columns of values into arrays.
       # We can then sort them and apply the appropriate operations.
 
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         distance(*lists)
       end
