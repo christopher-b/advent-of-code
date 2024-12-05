@@ -7,6 +7,7 @@ module Advent
       # For part 1, we find all instances of "XMAS" in the grid.
       # For part 2, we find all instances of "MAS" in the grid, using only diagonal vectors.
       # Then we count how many "A"s overlap.
+      # This is not very fast not memory efficient.
 
       def call
         puts "Part 1: #{part1}"
