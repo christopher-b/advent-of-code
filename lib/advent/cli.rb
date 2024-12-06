@@ -13,8 +13,7 @@ module Advent
     def go(year, day)
       puts "Running challenge for #{year} Day #{day}"
 
-      # We do memory and time profiling in separate runs because the memory profiler
-      # significantly increases the execution time
+      # We do memory and time profiling in separate runs because the memory profiler significantly increases the execution time
 
       execution_time = Benchmark.realtime do
         puts Challenge.run(year:, day:)
