@@ -135,11 +135,6 @@ module Advent
           class Day%{day} < Advent::Challenge
             # Explanation here
 
-            def call
-              puts "Part 1: \#{part1}"
-              puts "Part 2: \#{part2}"
-            end
-
             def part1
             end
 
