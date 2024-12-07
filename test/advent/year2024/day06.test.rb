@@ -2,18 +2,20 @@
 challenge = Advent::Challenge.get_with_sample(year: 2024, day: 6)
 Point = Advent::Year2024::Day06::Point
 Cursor = Advent::Year2024::Day06::Cursor
-origin = Point.new(0, 0)
+Vector = Advent::Year2024::Day06::Vector
+
+origin = Vector.new(Point.new(0, 0), Point.new(0, -1))
 
 test "part 1" do
   assert challenge.part1 == 41
 end
 
 test "part 2" do
-  assert challenge.part2 == 6
+  expect(challenge.part2) == 6
 end
 
 test "origin" do
-  assert challenge.origin == Point.new(4, 6)
+  assert challenge.origin == Vector.new(Point.new(4, 6), Point.new(0, -1))
 end
 
 test "cursor rotate" do
@@ -32,10 +34,10 @@ test "cursor rotate" do
 end
 
 test "cursor step" do
-  cursor = Cursor.new(origin, Advent::Year2024::Day06::RIGHT)
+  cursor = Cursor.new(Vector.new(Point.new(0, 0), Point.new(0, 1)))
 
   cursor.step
-  assert cursor.position == Point.new(1, 0)
+  assert cursor.position == Point.new(0, 1)
 end
 
 test "cursor walk" do
@@ -63,6 +65,24 @@ test "point equality" do
   refute Point.new(1, 2) == Point.new(2, 1)
 end
 
-# test "loop detection" do
-#   expect { challenge.walk(Point.new(3, 6)) }.to_raise(Advent::Year2024::Day06::LoopException)
-# end
+test "point triple equality" do
+  p1 = Point.new(1, 2)
+  p2 = Point.new(1, 2)
+  assert p1 === p2
+  # refute Point.new(1, 2, 3) == Point.new(2, 1, 3)
+end
+
+test "vector equality" do
+  v1 = Vector.new(Point.new(1, 2), Point.new(0, 1))
+  v2 = Vector.new(Point.new(1, 2), Point.new(0, 1))
+  v3 = Vector.new(Point.new(1, 2), Point.new(1, 0))
+  assert v1 == v2
+  refute v1 == v3
+end
+
+test "is_obstacle?" do
+  assert challenge.is_obstacle?(Point.new(4, 0))
+  refute challenge.is_obstacle?(Point.new(0, 0))
+
+  assert challenge.is_obstacle?(Point.new(0, 1), Point.new(0, 1))
+end
