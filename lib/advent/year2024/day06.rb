@@ -5,6 +5,7 @@ module Advent
       # Part 1 walks the path while maintaining a set of visited positions
       # Part 2 walks the path using Floyd's Tortoise and Hare algorithm to detect loops
       # Part 2 is brute-forced by adding extra obstacles along the initial walking path
+      # https://www.geeksforgeeks.org/floyds-cycle-finding-algorithm/
 
       class LoopException < StandardError; end
 
@@ -20,8 +21,7 @@ module Advent
       end
 
       def walk
-        Set.new.tap do |visited|
-          visited << origin
+        Set.new([origin]).tap do |visited|
           cursor = Cursor.new(origin)
           while valid_position?(cursor.next_position)
             if is_obstacle?(cursor.next_position)
@@ -34,10 +34,11 @@ module Advent
         end
       end
 
-      def walk_with_loop_detection(extra_obstacle = Point.new(-1, -1))
+      def walk_with_loop_detection(new_origin)
         # Tortoise moves one step, hare moves two steps
-        tortoise = Cursor.new(origin)
-        hare = Cursor.new(origin)
+        tortoise = Cursor.new(new_origin)
+        hare = Cursor.new(new_origin)
+        extra_obstacle = tortoise.next_position
 
         while valid_position?(hare.next_position)
           # Move tortoise one step
@@ -104,6 +105,8 @@ module Advent
         end
       end
 
+      Vector = Data.define(:position, :direction)
+
       UP = Point.new(0, -1)
       DOWN = Point.new(0, 1)
       LEFT = Point.new(-1, 0)
@@ -112,11 +115,13 @@ module Advent
       class Cursor
         attr_reader :position, :direction
         def initialize(position, direction = UP)
+          # @vector = vector
           @position = position
           @direction = direction
         end
 
         def rotate
+          # @vector = Vector.new(@vector.start, @vector.direction.rotate)
           @direction = position_iterator.next
         end
 
