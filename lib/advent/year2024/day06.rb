@@ -10,13 +10,13 @@ module Advent
       class LoopException < StandardError; end
 
       def part1
-        initial_path.size
+        initial_path.uniq(&:position).size
       end
 
       def part2
         # Brute force: add extra obstacles along the initial path
-        initial_path.count do |step|
-          walk_with_loop_detection(step)
+        initial_path.uniq(&:position).count do |start_vector|
+          walk_with_loop_detection(start_vector)
         end
       end
 
@@ -28,38 +28,69 @@ module Advent
               cursor.rotate
             else
               cursor.step
-              visited << cursor.position
             end
+
+            visited << cursor.vector
           end
         end
       end
 
       def walk_with_loop_detection(new_origin)
-        # Tortoise moves one step, hare moves two steps
-        tortoise = Cursor.new(new_origin)
-        hare = Cursor.new(new_origin)
-        extra_obstacle = tortoise.next_position
+        Set.new([new_origin]).tap do |visited|
+          # pp "Checking loop for #{new_origin}"
+          cursor = Cursor.new(new_origin)
+          extra_obstacle = cursor.next_position
 
-        while valid_position?(hare.next_position)
-          # Move tortoise one step
-          is_obstacle?(tortoise.next_position, extra_obstacle) ? tortoise.rotate : tortoise.step
+          # Early exit if the cursor is already pointing to an obstacle
+          return false if valid_position?(cursor.next_position) && is_obstacle?(cursor.next_position)
 
-          # Move hare two steps
-          2.times do
-            if valid_position?(hare.next_position)
-              is_obstacle?(hare.next_position, extra_obstacle) ? hare.rotate : hare.step
+          while valid_position?(cursor.next_position)
+            # puts cursor.vector
+            if is_obstacle?(cursor.next_position, extra_obstacle)
+              cursor.rotate
+            else
+              cursor.step
             end
-          end
 
-          # Check if tortoise and hare meet
-          if tortoise.position == hare.position && tortoise.direction == hare.direction
-            raise LoopException, "Loop detected at #{tortoise.position} with direction #{tortoise.direction}"
+            if visited.include?(cursor.vector)
+              # puts "LOOP"
+              return true
+            end
+            visited << cursor.vector
           end
         end
+
+        # puts "NO LOOP"
         false
-      rescue LoopException
-        true
+
       end
+
+      # Tortoise moves one step, hare moves two steps
+      #   tortoise = Cursor.new(new_origin)
+      #   hare = Cursor.new(new_origin)
+      #   extra_obstacle = tortoise.next_position
+      #
+      #   puts "Planting obstacle at #{tortoise.next_position}"
+      #
+      #   while valid_position?(hare.next_position) # Hare jumps out of the map first
+      #     # Move tortoise one step
+      #     is_obstacle?(tortoise.next_position, extra_obstacle) ? tortoise.rotate : tortoise.step
+      #
+      #     # Move hare two steps
+      #     2.times do
+      #       if valid_position?(hare.next_position)
+      #         is_obstacle?(hare.next_position, extra_obstacle) ? hare.rotate : hare.step
+      #       end
+      #     end
+      #
+      #     # Check if tortoise and hare meet
+      #     if tortoise.position == hare.position && tortoise.direction == hare.direction
+      #       raise LoopException, "Loop detected at #{tortoise.position} with direction #{tortoise.direction}"
+      #     end
+      #   end
+      #   false
+      # rescue LoopException
+      #   true
 
       def initial_path
         @initial_path ||= walk
@@ -86,7 +117,7 @@ module Advent
       def origin
         @origin ||= grid.each_with_index do |row, x|
           if (y = row.index("^"))
-            return Point.new(y, x)
+            return Vector.new(Point.new(y, x), UP)
           end
         end
       end
@@ -103,9 +134,21 @@ module Advent
         def y_in_range?(range)
           range.cover?(y)
         end
+
+        def to_s
+          "(#{x}, #{y})"
+        end
       end
 
-      Vector = Data.define(:position, :direction)
+      Vector = Data.define(:position, :direction) do
+        def end_vector
+          Vector.new(position + direction, direction)
+        end
+
+        def to_s
+          "#{position} -> #{direction}"
+        end
+      end
 
       UP = Point.new(0, -1)
       DOWN = Point.new(0, 1)
@@ -113,28 +156,43 @@ module Advent
       RIGHT = Point.new(1, 0)
 
       class Cursor
-        attr_reader :position, :direction
-        def initialize(position, direction = UP)
-          # @vector = vector
-          @position = position
-          @direction = direction
+        attr_reader :vector
+
+        def initialize(vector)
+          @vector = vector
+        end
+
+        def position
+          @vector.position
+        end
+
+        def direction
+          @vector.direction
         end
 
         def rotate
-          # @vector = Vector.new(@vector.start, @vector.direction.rotate)
-          @direction = position_iterator.next
+          @vector = Vector.new(position, next_direction)
         end
 
         def step
-          @position = next_position
+          @vector = next_vector
+        end
+
+        def next_vector
+          @vector.end_vector
         end
 
         def next_position
-          position + direction
+          next_vector.position
         end
 
-        def position_iterator
-          @position_iterator ||= [RIGHT, DOWN, LEFT, UP].cycle
+        def next_direction
+          case direction
+          when UP then RIGHT
+          when RIGHT then DOWN
+          when DOWN then LEFT
+          when LEFT then UP
+          end
         end
       end
     end
