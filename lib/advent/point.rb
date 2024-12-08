@@ -4,12 +4,20 @@ module Advent
       Point.new(x + other.x, y + other.y)
     end
 
+    def -(other)
+      Point.new(x - other.x, y - other.y)
+    end
+
     def x_in_range?(range)
       range.cover?(x)
     end
 
     def y_in_range?(range)
       range.cover?(y)
+    end
+
+    def <=>(other)
+      [x, y] <=> [other.x, other.y]
     end
 
     def to_s
