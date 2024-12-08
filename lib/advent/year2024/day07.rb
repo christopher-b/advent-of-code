@@ -24,7 +24,7 @@ module Advent
 
       def part2
         calibrations
-          .select { |calibration| calibration.valid?([:+, :*, :concat]) }
+          .select { |calibration| calibration.valid?(%w[+ * concat]) }
           .sum(&:value)
       end
 
@@ -58,7 +58,7 @@ module Advent
         # Recursively check all possible combinations of operators
         # We have default values for operators, total, and operands to make the recursion easier
         # We duplicate the operands because it's easier to mutate it
-        def valid?(operators = [:+, :*], total = nil, operands = self.operands.dup)
+        def valid?(operators = %w[+ *], total = nil, operands = self.operands.dup)
           total = operands.shift if total.nil?
 
           # Return early if we've exceeded the target
@@ -68,7 +68,10 @@ module Advent
           return total == value if operands.empty?
 
           operators.any? do |operator|
+            # Perform the calculation
             new_total = total.send(operator, operands.first)
+
+            # Keep iterating
             valid?(operators, new_total, operands[1..])
           end
         end

@@ -22,7 +22,7 @@ module Advent
 
       def walk
         Set.new([origin]).tap do |visited|
-          cursor = Cursor.new(origin)
+          cursor = Guard.new(origin)
           while valid_position?(cursor.next_position)
             if is_obstacle?(cursor.next_position)
               cursor.rotate
@@ -38,7 +38,7 @@ module Advent
       def walk_with_loop_detection(new_origin)
         Set.new([new_origin]).tap do |visited|
           # pp "Checking loop for #{new_origin}"
-          cursor = Cursor.new(new_origin)
+          cursor = Guard.new(new_origin)
           extra_obstacle = cursor.next_position
 
           # Early exit if the cursor is already pointing to an obstacle
@@ -62,7 +62,6 @@ module Advent
 
         # puts "NO LOOP"
         false
-
       end
 
       # Tortoise moves one step, hare moves two steps
@@ -122,68 +121,14 @@ module Advent
         end
       end
 
-      Point = Data.define(:x, :y) do
-        def +(other)
-          Point.new(x + other.x, y + other.y)
-        end
-
-        def x_in_range?(range)
-          range.cover?(x)
-        end
-
-        def y_in_range?(range)
-          range.cover?(y)
-        end
-
-        def to_s
-          "(#{x}, #{y})"
-        end
-      end
-
-      Vector = Data.define(:position, :direction) do
-        def end_vector
-          Vector.new(position + direction, direction)
-        end
-
-        def to_s
-          "#{position} -> #{direction}"
-        end
-      end
-
       UP = Point.new(0, -1)
       DOWN = Point.new(0, 1)
       LEFT = Point.new(-1, 0)
       RIGHT = Point.new(1, 0)
 
-      class Cursor
-        attr_reader :vector
-
-        def initialize(vector)
-          @vector = vector
-        end
-
-        def position
-          @vector.position
-        end
-
-        def direction
-          @vector.direction
-        end
-
+      class Guard < Cursor
         def rotate
           @vector = Vector.new(position, next_direction)
-        end
-
-        def step
-          @vector = next_vector
-        end
-
-        def next_vector
-          @vector.end_vector
-        end
-
-        def next_position
-          next_vector.position
         end
 
         def next_direction

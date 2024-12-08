@@ -5,6 +5,11 @@ require "advent/challenge"
 require "advent/day_info"
 require "advent/generator"
 
+require "advent/cursor"
+require "advent/grid"
+require "advent/point"
+require "advent/vector"
+
 module Advent
   def self.pad_day(day)
     day.to_s.rjust(2, "0")
