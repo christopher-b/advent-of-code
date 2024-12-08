@@ -64,19 +64,18 @@ module Advent
       def vector_set_omni
         [-1, 0, 1].repeated_permutation(2).to_a
           .tap { |combos| combos.delete([0, 0]) }
-          .map { |x, y| Vector.new(x:, y:, grid: input_lines) }
+          .map { |x, y| VectorCursor.new(x:, y:, grid: input_lines) }
       end
 
       # Get a vector for each diagonal direction
       def vector_set_diag
         [-1, 1].repeated_permutation(2).to_a
           .tap { |combos| combos.delete([0, 0]) }
-          .map { |x, y| Vector.new(x:, y:, grid: input_lines) }
+          .map { |x, y| VectorCursor.new(x:, y:, grid: input_lines) }
       end
 
-      Point = Data.define(:x, :y)
-
-      class Vector
+      # Should use Vector and Cursor library classes
+      class VectorCursor
         attr_accessor :x, :y, :current
 
         def initialize(x:, y:, grid:, current: Point.new(x: 0, y: 0))

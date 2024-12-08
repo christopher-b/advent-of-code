@@ -1,10 +1,11 @@
 # https://adventofcode.com/2024/day/6
 challenge = Advent::Challenge.get_with_sample(year: 2024, day: 6)
-Point = Advent::Year2024::Day06::Point
-Cursor = Advent::Year2024::Day06::Cursor
-Vector = Advent::Year2024::Day06::Vector
+Point = Advent::Point
+Cursor = Advent::Cursor
+Vector = Advent::Vector
+Guard = Advent::Year2024::Day06::Guard
 
-origin = Vector.new(Point.new(0, 0), Point.new(0, -1))
+origin = Advent::Vector.new(Point.new(0, 0), Point.new(0, -1))
 
 test "part 1" do
   assert challenge.part1 == 41
@@ -18,8 +19,8 @@ test "origin" do
   assert challenge.origin == Vector.new(Point.new(4, 6), Point.new(0, -1))
 end
 
-test "cursor rotate" do
-  cursor = Cursor.new(origin)
+test "guard rotate" do
+  cursor = Guard.new(origin)
 
   cursor.rotate
   assert cursor.direction == Advent::Year2024::Day06::RIGHT
@@ -33,15 +34,8 @@ test "cursor rotate" do
   assert cursor.direction == Advent::Year2024::Day06::RIGHT
 end
 
-test "cursor step" do
-  cursor = Cursor.new(Vector.new(Point.new(0, 0), Point.new(0, 1)))
-
-  cursor.step
-  assert cursor.position == Point.new(0, 1)
-end
-
 test "cursor walk" do
-  cursor = Cursor.new(origin)
+  cursor = Guard.new(origin)
   cursor.rotate
   cursor.step
   assert(cursor.position == Point.new(1, 0))

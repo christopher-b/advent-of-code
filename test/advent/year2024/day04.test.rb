@@ -14,11 +14,11 @@ test "vectors" do
 end
 
 test "Vector#increment" do
-  vector = Advent::Year2024::Day04::Vector.new(x: 1, y: 1, grid: ["ABC"])
-  vector.current = Advent::Year2024::Day04::Point.new(x: 0, y: 0)
+  vector = Advent::Year2024::Day04::VectorCursor.new(x: 1, y: 1, grid: ["ABC"])
+  vector.current = Advent::Point.new(x: 0, y: 0)
 
   vector.increment
-  assert vector.current == Advent::Year2024::Day04::Point.new(x: 1, y: 1)
+  assert vector.current == Advent::Point.new(x: 1, y: 1)
 end
 
 test "Vector#next_value" do
@@ -26,8 +26,8 @@ test "Vector#next_value" do
     "ABC",
     "DEF"
   ]
-  vector = Advent::Year2024::Day04::Vector.new(x: 1, y: 1, grid: grid)
-  vector.current = Advent::Year2024::Day04::Point.new(x: 0, y: 0)
+  vector = Advent::Year2024::Day04::VectorCursor.new(x: 1, y: 1, grid: grid)
+  vector.current = Advent::Point.new(x: 0, y: 0)
 
   assert vector.next_value == "E"
 end
