@@ -15,9 +15,13 @@ module Advent
 
       def anitnodes
         @anitnodes ||= Set.new.tap do |anodes|
-          with_permutations do |a, b|
+          each_node_permutation do |a, b|
+            # Start by representing the distance between two nodes
             vector = Vector.from_points(a, b)
+
+            # Step from node a, to node b, then to the first antinode
             antinode1 = vector.step.step.position
+            # Step back from a to the second antinode
             antinode2 = vector.step_back.position
 
             anodes << antinode1 if map.in_range?(antinode1)
@@ -28,10 +32,11 @@ module Advent
 
       def antinodes_with_resonance
         @anitnodes_with_resonance ||= Set.new.tap do |anodes|
-          with_permutations do |a, b|
+          each_node_permutation do |a, b|
+            # Find successinve antinodes in each direction from the two nodes
             [
-              Vector.from_points(a, b),
-              Vector.from_points(b, a)
+              Vector.from_points(a, b).step,
+              Vector.from_points(b, a).step
             ].each do |vector|
               while map.in_range?(vector.position)
                 anodes << vector.position
@@ -42,7 +47,8 @@ module Advent
         end
       end
 
-      def with_permutations
+      # Yield each pair of nodes. Does not yield node "labels"
+      def each_node_permutation
         node_sets.each do |nodes|
           nodes.permutation(2).each do |a, b|
             yield a, b
@@ -61,12 +67,10 @@ module Advent
       class Map < Advent::Grid
         def node_sets
           @nodes ||= Hash.new { |h, k| h[k] = [] }.tap do |nodes|
-            rows.each_with_index do |row, y|
-              row.chars.each_with_index do |char, x|
-                unless char == "."
-                  nodes[char] ||= []
-                  nodes[char] << Point.new(x, y)
-                end
+            each_char do |char, _row, x, y|
+              unless char == "."
+                nodes[char] ||= []
+                nodes[char] << Point.new(x, y)
               end
             end
           end
@@ -75,4 +79,3 @@ module Advent
     end
   end
 end
-
