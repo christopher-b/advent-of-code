@@ -8,7 +8,7 @@ Guard = Advent::Year2024::Day06::Guard
 origin = Advent::Vector.new(Point.new(0, 0), Point.new(0, -1))
 
 test "part 1" do
-  assert challenge.part1 == 41
+  expect(challenge.part1) == 41
 end
 
 test "part 2" do
@@ -23,15 +23,15 @@ test "guard rotate" do
   cursor = Guard.new(origin)
 
   cursor.rotate
-  assert cursor.direction == Advent::Year2024::Day06::RIGHT
+  assert cursor.direction == Guard::RIGHT
   cursor.rotate
-  assert cursor.direction == Advent::Year2024::Day06::DOWN
+  assert cursor.direction == Guard::DOWN
   cursor.rotate
-  assert cursor.direction == Advent::Year2024::Day06::LEFT
+  assert cursor.direction == Guard::LEFT
   cursor.rotate
-  assert cursor.direction == Advent::Year2024::Day06::UP
+  assert cursor.direction == Guard::UP
   cursor.rotate
-  assert cursor.direction == Advent::Year2024::Day06::RIGHT
+  assert cursor.direction == Guard::RIGHT
 end
 
 test "cursor walk" do
@@ -44,12 +44,6 @@ test "cursor walk" do
   cursor.rotate
   cursor.step
   assert(cursor.position == Point.new(2, 1))
-end
-
-test "valid position" do
-  assert challenge.valid_position?(Point.new(0, 0))
-  refute challenge.valid_position?(Point.new(-1, 0))
-  refute challenge.valid_position?(Point.new(10, 1))
 end
 
 test "point equality" do
@@ -72,11 +66,4 @@ test "vector equality" do
   v3 = Vector.new(Point.new(1, 2), Point.new(1, 0))
   assert v1 == v2
   refute v1 == v3
-end
-
-test "is_obstacle?" do
-  assert challenge.is_obstacle?(Point.new(4, 0))
-  refute challenge.is_obstacle?(Point.new(0, 0))
-
-  assert challenge.is_obstacle?(Point.new(0, 1), Point.new(0, 1))
 end

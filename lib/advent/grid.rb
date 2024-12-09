@@ -1,10 +1,33 @@
+require "forwardable"
+
 module Advent
   class Grid
+    include Enumerable
+    extend Forwardable
+    def_delegators :@rows, :each
+
     attr_reader :rows, :width, :height
+
     def initialize(rows)
       @rows = rows
       @width = rows.first.size
       @height = rows.size
+    end
+
+    def [](y)
+      rows[y]
+    end
+
+    def each_char
+      rows.each_with_index do |row, y|
+        row.chars.each_with_index do |char, x|
+          yield char, row, x, y
+        end
+      end
+    end
+
+    def value_at(position)
+      rows[position.y][position.x]
     end
 
     def in_range?(point)
