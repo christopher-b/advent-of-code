@@ -4,40 +4,37 @@ module Advent
     class Day09 < Advent::Challenge
       # My first approach didn't finish after an hour or so :\
       # This method tracks the positions and size of files as a list, but doesn't bother to sort them. We're just changing positions around.
+      # This completes in about 125ms
 
       def part1
-        disk_map.compact.checksum
+        DiskMap.new(input_text).compact.checksum
       end
 
       def part2
-        smart_disk_map.compact.checksum
-      end
-
-      def disk_map
-        DiskMap.new(input_text)
-      end
-
-      def smart_disk_map
-        SmartDiskMap.new(input_text)
+        SmartDiskMap.new(input_text).compact.checksum
       end
 
       class SmartDiskMap
-        attr_accessor :files, :blanks, :file_id
+        attr_accessor :files, :blanks
+
+        File = Data.define(:position, :size)
 
         def initialize(input_text)
           @files = {}
           @blanks = []
-          @file_id = 0
+          parse_input(input_text)
+        end
 
-          position = 0
-          # Parse into files and blanks
-          input_text.chars.each_with_index do |char, i|
-            size = char.to_i
+        # Parse into files and blanks
+        def parse_input(input_text)
+          file_id = position = 0
+
+          input_text.chars.map(&:to_i).each_with_index do |size, i|
             if i.even?
-              files[file_id] = [position, size]
-              @file_id += 1
+              files[file_id] = File.new(position:, size:)
+              file_id += 1
             else
-              blanks << [position, size] unless size.zero?
+              blanks << File.new(position:, size:) unless size.zero?
             end
 
             position += size
@@ -45,33 +42,33 @@ module Advent
         end
 
         def render
-          files.each do |id, (position, size)|
+          files.each do |id, file|
             size.times { print id }
-            _, blank_size = blanks.find { |(blank_position, blank_size)| blank_position > position }
-            blank_size.&times { print "." }
+            blank = blanks.find { |blank| blank.position > file.position }
+            blank.size.&times { print "." }
           end
         end
 
         def compact
-          while file_id > 0
-            @file_id -= 1
-
-            file_position, file_size = files[file_id]
-            blanks.each_with_index do |(blank_position, blank_size), i|
+          files.keys.reverse_each do |file_id|
+            file = files[file_id]
+            blanks.each_with_index do |blank, i|
               # If the blank is after the file, we can skip it and all previous blanks
-              if blank_position >= file_position
+              if blank.position >= file.position
                 @blanks = @blanks[...i]
                 break
               end
 
-              if file_size <= blank_size
-                files[file_id] = [blank_position, file_size]
+              # If we can squeeze the file into the blank
+              if file.size <= blank.size
+                files[file_id] = File.new(position: blank.position, size: file.size)
 
-                if file_size == blank_size
+                if file.size == blank.size
                   @blanks.delete_at(i)
                 else
-                  @blanks[i] = [blank_position + file_size, blank_size - file_size]
+                  @blanks[i] = File.new(position: blank.position + file.size, size: blank.size - file.size)
                 end
+
                 break
               end
             end
@@ -82,8 +79,8 @@ module Advent
 
         def checksum
           total = 0
-          files.each do |id, (position, size)|
-            (position...position + size).each do |x|
+          files.each do |id, file|
+            (file.position...file.position + file.size).each do |x|
               total += id * x
             end
           end
