@@ -2,10 +2,7 @@
 module Advent
   module Year2023
     class Day11 < Advent::Challenge
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
+      # This gives the wrong answer, apparently? It worked at some point
 
       def part1
         delta_sum(1)
@@ -40,7 +37,7 @@ module Advent
         (empty_set & (range[0]...range[1]).to_a).size
       end
 
-      def parse_file
+      def parse_input
         @universe = each_line.map { |line| line.chars }
 
         @empty_rows = detect_empties(@universe)
