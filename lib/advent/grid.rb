@@ -30,6 +30,15 @@ module Advent
       rows[position.y][position.x]
     end
 
+    def adjacent_points_in_range(point)
+      [
+        Point.new(point.x, point.y - 1),
+        Point.new(point.x, point.y + 1),
+        Point.new(point.x - 1, point.y),
+        Point.new(point.x + 1, point.y)
+      ].select { |adjacent_point| in_range?(adjacent_point) }
+    end
+
     def in_range?(point)
       x_in_range?(point.x) && y_in_range?(point.y)
     end
