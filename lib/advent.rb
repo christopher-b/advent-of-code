@@ -1,10 +1,12 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
+require "advent/benchmark"
 require "advent/cli"
 require "advent/challenge"
 require "advent/day_info"
 require "advent/generator"
 
+# Helper classes
 require "advent/cursor"
 require "advent/grid"
 require "advent/point"

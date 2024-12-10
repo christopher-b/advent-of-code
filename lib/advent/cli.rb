@@ -1,4 +1,5 @@
 require "benchmark"
+# require "benchmark/ips"
 require "memory_profiler"
 require "logger"
 require "thor"
@@ -15,7 +16,7 @@ module Advent
 
       # We do memory and time profiling in separate runs because the memory profiler significantly increases the execution time
 
-      execution_time = Benchmark.realtime do
+      execution_time = ::Benchmark.realtime do
         puts Challenge.run(year:, day:)
       end
       puts ""
@@ -31,6 +32,12 @@ module Advent
     def init(year, day)
       logger = ::Logger.new($stdout)
       Generator.new(year:, day:, logger:).call
+    end
+
+    desc "benchmark YEAR DAY", "Run the benchmark suite. If day is omitted, run all days"
+    def benchmark(year, day = nil)
+      Advent::Benchmark.new(year, day).run
+      # Advent::Benchmark.new(year, day).stackprof
     end
   end
 end
