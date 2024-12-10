@@ -6,6 +6,16 @@ module Advent
       @vector = vector
     end
 
+    def vector=(vector)
+      @vector = vector
+      @next_vector = nil
+      @next_position = nil
+    end
+
+    def step
+      self.vector = next_vector
+    end
+
     def position
       vector.position
     end
@@ -14,16 +24,12 @@ module Advent
       vector.direction
     end
 
-    def step
-      @vector = next_vector
-    end
-
     def next_vector
-      vector.end_vector
+      @next_vector ||= vector.end_vector
     end
 
     def next_position
-      vector.end_vector.position
+      @next_position ||= vector.end_vector.position
     end
   end
 end
