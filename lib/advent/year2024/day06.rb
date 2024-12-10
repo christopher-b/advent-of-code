@@ -110,7 +110,7 @@ module Advent
         end
 
         def rotate
-          @vector = Vector.new(position, next_direction)
+          self.vector = Vector.new(position, next_direction)
         end
 
         def next_direction
