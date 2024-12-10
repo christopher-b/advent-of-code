@@ -14,8 +14,8 @@ test "part 2" do
 end
 
 test "DiskMap#initialize" do
- disk_map = DiskMap.new("12345")
- expect(disk_map.files) == %w[0 -1 -1 1 1 1 -1 -1 -1 -1 2 2 2 2 2].map(&:to_i)
+  disk_map = DiskMap.new("12345")
+  expect(disk_map.files) == %w[0 -1 -1 1 1 1 -1 -1 -1 -1 2 2 2 2 2].map(&:to_i)
 end
 
 test "DiskMap#blank_indicies" do
