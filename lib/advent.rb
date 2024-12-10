@@ -5,6 +5,11 @@ require "advent/challenge"
 require "advent/day_info"
 require "advent/generator"
 
+require "advent/cursor"
+require "advent/grid"
+require "advent/point"
+require "advent/vector"
+
 module Advent
   def self.pad_day(day)
     day.to_s.rjust(2, "0")
@@ -14,13 +19,6 @@ module Advent
     (1..25).each do |day|
       day = Advent.pad_day(day)
       autoload :"Day#{day}", "advent/year2024/day#{day}"
-    end
-  end
-
-  module Year2023
-    (1..25).each do |day|
-      day = Advent.pad_day(day)
-      autoload :"Day#{day}", "advent/year2023/day#{day}"
     end
   end
 

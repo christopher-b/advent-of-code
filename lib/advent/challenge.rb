@@ -1,21 +1,33 @@
 module Advent
   class Challenge
-    attr_reader :input_file
+    attr_accessor :input_file
 
     def initialize(input_file)
       @input_file = input_file
     end
 
     def call
-      raise NotImplementedError
+      parse_input if respond_to?(:parse_input)
+      <<~OUTPUT
+        Part 1: #{part1}
+        Part 2: #{part2}
+      OUTPUT
     end
 
     def each_line(...)
       @input_file.each_line(...)
+    ensure
+      @input_file.rewind
     end
 
     def input_lines
-      @input_file.readlines(chomp: true)
+      @input_lines ||= @input_file.readlines(chomp: true)
+    ensure
+      @input_file.rewind
+    end
+
+    def input_text
+      @input_file.read
     ensure
       @input_file.rewind
     end
