@@ -12,9 +12,9 @@ module Advent
     def run
       puts "Running benchmarks..."
       days.each do |day|
-        print "#{@year} day #{@day}... "
+        print "#{@year} day #{day}... "
         results = Advent::Benchmark.precise_benchmark do
-          Challenge.run(year: @year, day: @day)
+          Challenge.run(year: @year, day: day)
         end
         print "#{(results.average * 1000).round(2)}ms\n"
       end
@@ -29,7 +29,8 @@ module Advent
 
     def days
       if @day.nil?
-        Dir.glob("lib/advent/year#{year}/day*.rb").map do |file|
+        Dir.glob("lib/advent/year#{@year}/day*.rb").map do |file|
+          pp file
           file[/day(\d+)/, 1].to_i
         end
       else

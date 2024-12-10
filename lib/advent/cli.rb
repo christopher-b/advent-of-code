@@ -1,5 +1,4 @@
 require "benchmark"
-# require "benchmark/ips"
 require "memory_profiler"
 require "logger"
 require "thor"
