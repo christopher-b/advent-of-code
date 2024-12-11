@@ -1,6 +1,6 @@
 # Advent of Code
 
-My solutions to [Advent of Code](https://adventofcode.com/) challenges.
+My solutions to [Advent of Code](https://adventofcode.com/) challenges. My solutions emphasize readability and object-oriented design over pure performance. I'm not aiming for the fastest solutions, but I do try to keep them efficient.
 
 This project includes some scaffolding around the challenges, including:
 - `exe/advent init YEAR DAY`: initialize a day's challenge class, test and input files. Requires the `AOC_SESSION` env var (get it from a cookie in a browser session).
@@ -22,6 +22,7 @@ This project includes some scaffolding around the challenges, including:
 | [Day 8](lib/advent/year2024/day08.rb)  |   8.22ms             |
 | [Day 9](lib/advent/year2024/day09.rb)  | 142.51ms             |
 | [Day 10](lib/advent/year2024/day10.rb) |  19.79ms             |
+| [Day 11](lib/advent/year2024/day11.rb) |  63.93ms             |
 
 ## [2023 Solutions](lib/advent/year2023_archive)
 
