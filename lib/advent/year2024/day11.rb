@@ -45,7 +45,7 @@ module Advent
             next if count.zero?
 
             # We're applying the same operation to each stone of the same value, so
-            # we increment by `count` instead of 1
+            # we increment by `count`
             if value.zero?
               new_stones[1] += count
             elsif even_length?(value)

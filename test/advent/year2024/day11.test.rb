@@ -2,11 +2,9 @@
 challenge = Advent::Challenge.get_with_sample(year: 2024, day: 11)
 StoneSet = Advent::Year2024::Day11::StoneSet
 
-test "part 1" do
+test "part 1 & 2" do
+  # Must run in order
   expect(challenge.part1) == 55312
-end
-
-test "part 2" do
   expect(challenge.part2) == 65601038650482
 end
 
