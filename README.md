@@ -23,6 +23,7 @@ This project includes some scaffolding around the challenges, including:
 | [Day 9](lib/advent/year2024/day09.rb)  | 142.51ms             |
 | [Day 10](lib/advent/year2024/day10.rb) |  19.79ms             |
 | [Day 11](lib/advent/year2024/day11.rb) |  63.93ms             |
+| [Day 12](lib/advent/year2024/day12.rb) | 429.86ms             |
 
 ## [2023 Solutions](lib/advent/year2023_archive)
 

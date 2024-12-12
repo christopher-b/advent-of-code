@@ -2,6 +2,8 @@ require "forwardable"
 
 module Advent
   class Grid
+    class OutOfRangeError < StandardError; end
+
     include Enumerable
     extend Forwardable
     def_delegators :@rows, :each
@@ -18,6 +20,14 @@ module Advent
       rows[y]
     end
 
+    def each_point
+      rows.each_with_index do |row, y|
+        row.chars.each_with_index do |char, x|
+          yield Point.new(x, y), char
+        end
+      end
+    end
+
     def each_char
       rows.each_with_index do |row, y|
         row.chars.each_with_index do |char, x|
@@ -27,16 +37,28 @@ module Advent
     end
 
     def value_at(position)
+      raise OutOfRangeError unless in_range?(position)
       rows[position.y][position.x]
     end
 
+    # Returns point in order: NESW
     def adjacent_points_in_range(point)
       [
         Point.new(point.x, point.y - 1),
+        Point.new(point.x + 1, point.y),
         Point.new(point.x, point.y + 1),
-        Point.new(point.x - 1, point.y),
-        Point.new(point.x + 1, point.y)
+        Point.new(point.x - 1, point.y)
       ].select { |adjacent_point| in_range?(adjacent_point) }
+    end
+
+    # Returns point in order: NW, NE, SE, SW
+    def diagonal_points_in_range(point)
+      [
+        Point.new(point.x - 1, point.y - 1),
+        Point.new(point.x + 1, point.y - 1),
+        Point.new(point.x + 1, point.y + 1),
+        Point.new(point.x - 1, point.y + 1)
+      ].select { |diagonal_point| in_range?(diagonal_point) }
     end
 
     def in_range?(point)
