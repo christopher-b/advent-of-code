@@ -150,13 +150,11 @@ module Advent
       challenge = Advent::Challenge.get_with_sample(year: %{year}, day: %{day})
 
       test "part 1" do
-        # pp challenge.part1
-        # assert challenge.part1 == 0
+        # expect(challenge.part1) == 0
       end
 
       test "part 2" do
-        # pp challenge.part2
-        # assert challenge.part2 == 0
+        # expect(challenge.part2) == 0
       end
     TEST
   end
