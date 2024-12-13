@@ -72,6 +72,7 @@ module Advent
         # We create 4 2x2 windows around the point, and check for matching values
         # We keep detected corners in a set to avoid double counting
         # A corner is described by the four points surrounding it
+        # We could probably check for simple conditions to do early exits
         def detect_corners(point, value, existing_corners)
           [].tap do |corners|
             offsets = [
