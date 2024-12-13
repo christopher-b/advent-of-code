@@ -30,7 +30,6 @@ module Advent
     def days
       if @day.nil?
         Dir.glob("lib/advent/year#{@year}/day*.rb").map do |file|
-          pp file
           file[/day(\d+)/, 1].to_i
         end
       else
@@ -51,7 +50,7 @@ module Advent
 
         # Calculate statistics
         average = times.sum / iterations
-        variance = times.map { |t| (t - average) ** 2 }.sum / iterations
+        variance = times.map { |t| (t - average)**2 }.sum / iterations
         standard_deviation = Math.sqrt(variance)
 
         Result.new(average:, times:, standard_deviation:)

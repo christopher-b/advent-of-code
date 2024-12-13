@@ -2,11 +2,6 @@
 module Advent
   module Year2023
     class Day07 < Advent::Challenge
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         hands.sort.each_with_index.sum do |hand, i|
           hand.winnings(i + 1)

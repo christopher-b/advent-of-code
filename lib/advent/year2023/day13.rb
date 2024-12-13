@@ -13,7 +13,7 @@ module Advent
           puts "\n"
           p.lines.each { puts _1.join "" }
           puts "H: #{p.horizontal_lines} V: #{p.vertical_lines} S: #{p.summary}"
-            puts "\n\n"
+           puts "\n\n"
         end
         patterns.map(&:summary).sum
       end

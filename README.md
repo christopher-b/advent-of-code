@@ -26,7 +26,21 @@ This project includes some scaffolding around the challenges, including:
 | [Day 12](lib/advent/year2024/day12.rb) | 429.86ms             |
 | [Day 13](lib/advent/year2024/day13.rb) |   2.36ms             |
 
-## [2023 Solutions](lib/advent/year2023_archive)
+## [2023 Solutions](lib/advent/year2023)
 
-These are a bit messy. I'm in the process of migrating and tidying them up.
+| Day                                    | Execution Time       |
+|----------------------------------------|----------------------|
+| [Day 1](lib/advent/year2023/day01.rb)  |   5.81ms             |
+| [Day 2](lib/advent/year2023/day02.rb)  |  16.65ms             |
+| [Day 3](lib/advent/year2023/day03.rb)  |   1.63s              |
+| [Day 4](lib/advent/year2023/day04.rb)  |  50.33s              |
+| [Day 5](lib/advent/year2023/day05.rb)  |   3.55ms             |
+| [Day 6](lib/advent/year2023/day06.rb)  |  14.44ms             |
+| [Day 7](lib/advent/year2023/day07.rb)  |  14.92ms             |
+| [Day 8](lib/advent/year2023/day08.rb)  |  54.77ms             |
+| [Day 9](lib/advent/year2023/day09.rb)  |   7.57ms             |
+| [Day 10](lib/advent/year2023/day10.rb) |  48.91ms             |
+| [Day 11](lib/advent/year2023/day11.rb) | 786.18ms             |
+| [Day 14](lib/advent/year2023/day14.rb) |   3.42s              |
+| [Day 15](lib/advent/year2023/day15.rb) |  64.47ms             |
 

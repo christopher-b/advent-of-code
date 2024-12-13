@@ -2,12 +2,6 @@
 module Advent
   module Year2023
     class Day10 < Advent::Challenge
-      def call
-        parse_input
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         a, b = @origin.connections
         last_a = last_b = @origin

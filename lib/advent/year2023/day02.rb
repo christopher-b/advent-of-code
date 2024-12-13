@@ -2,11 +2,6 @@
 module Advent
   module Year2023
     class Day02 < Advent::Challenge
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         games.reject { |g| g.max_red > 12 || g.max_green > 13 || g.max_blue > 14 }.map(&:id).sum
       end

@@ -4,12 +4,6 @@ module Advent
   module Year2023
     class Day05 < Advent::Challenge
       attr_reader :seeds, :maps
-      def call
-        parse_input
-
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
 
       def part1
         seeds.map do |seed|

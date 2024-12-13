@@ -2,11 +2,6 @@
 module Advent
   module Year2023
     class Day03 < Advent::Challenge
-      def call
-        puts "Part 1: #{part1}"
-        puts "Part 2: #{part2}"
-      end
-
       def part1
         chunks_near_symbols.map(&:value).sum
       end
