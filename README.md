@@ -11,7 +11,7 @@ This project includes some scaffolding around the challenges, including:
 ## [2024 Solutions](lib/advent/year2024)
 
 | Day                                    | Execution Time       |
-|----------------------------------------|----------------------|
+|----------------------------------------|---------------------:|
 | [Day 1](lib/advent/year2024/day01.rb)  |   4.09ms             |
 | [Day 2](lib/advent/year2024/day02.rb)  |   8.63ms             |
 | [Day 3](lib/advent/year2024/day03.rb)  |   1.87ms             |
@@ -29,7 +29,7 @@ This project includes some scaffolding around the challenges, including:
 ## [2023 Solutions](lib/advent/year2023)
 
 | Day                                    | Execution Time       |
-|----------------------------------------|----------------------|
+|----------------------------------------|---------------------:|
 | [Day 1](lib/advent/year2023/day01.rb)  |   5.81ms             |
 | [Day 2](lib/advent/year2023/day02.rb)  |  16.65ms             |
 | [Day 3](lib/advent/year2023/day03.rb)  |   1.63s              |
