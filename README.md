@@ -8,7 +8,7 @@ This project includes some scaffolding around the challenges, including:
 - `mise run test` or `bin/qt` to run all tests (includes the tests for the solutions and the scaffolding)
 - `mise run watch` or `bin/guard` to run tests in watch mode
 
-## [2024 Solutions](lib/advent/year2024) :star: × 26/50
+## [2024 Solutions](lib/advent/year2024) :star: × 28/50
 
 | Day                                    | Execution Time       |
 |----------------------------------------|---------------------:|
@@ -25,6 +25,7 @@ This project includes some scaffolding around the challenges, including:
 | [Day 11](lib/advent/year2024/day11.rb) |  63.93ms             |
 | [Day 12](lib/advent/year2024/day12.rb) | 429.86ms             |
 | [Day 13](lib/advent/year2024/day13.rb) |   2.36ms             |
+| [Day 14](lib/advent/year2024/day14.rb) |  43.84ms             |
 
 ## [2023 Solutions](lib/advent/year2023) :star: × 27/50
 
