@@ -1,5 +1,12 @@
 module Advent
-  Vector = Data.define(:position, :direction) do
+  class Vector
+    attr_accessor :position, :direction
+
+    def initialize(position, direction)
+      @position = position
+      @direction = direction
+    end
+
     def end_vector
       Vector.new(position + direction, direction)
     end
@@ -11,6 +18,10 @@ module Advent
 
     def to_s
       "#{position} -> #{direction}"
+    end
+
+    def ==(other)
+      position == other.position && direction == other.direction
     end
 
     class << self
