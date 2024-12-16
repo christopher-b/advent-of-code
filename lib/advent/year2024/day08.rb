@@ -67,7 +67,7 @@ module Advent
       class Map < Advent::Grid
         def node_sets
           @nodes ||= Hash.new { |h, k| h[k] = [] }.tap do |nodes|
-            each_char do |char, _row, x, y|
+            each_char do |char, x, y|
               unless char == "."
                 nodes[char] ||= []
                 nodes[char] << Point.new(x, y)

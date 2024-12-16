@@ -21,6 +21,7 @@ module Advent
     end
 
     def each_point
+      return to_enum(__method__) unless block_given?
       rows.each_with_index do |row, y|
         row.chars.each_with_index do |char, x|
           yield Point.new(x, y), char
@@ -29,9 +30,10 @@ module Advent
     end
 
     def each_char
+      return to_enum(__method__) unless block_given?
       rows.each_with_index do |row, y|
         row.chars.each_with_index do |char, x|
-          yield char, row, x, y
+          yield char, x, y
         end
       end
     end
