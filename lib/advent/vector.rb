@@ -16,12 +16,28 @@ module Advent
       Vector.new(position - direction, direction)
     end
 
-    def to_s
-      "#{position} -> #{direction}"
+    def rotate_clockwise
+      Vector.new(position, Point.new(direction.y, -direction.x))
+    end
+
+    def rotate_counter_clockwise
+      Vector.new(position, Point.new(-direction.y, direction.x))
     end
 
     def ==(other)
       position == other.position && direction == other.direction
+    end
+
+    def to_s
+      "#{position} -> #{direction}"
+    end
+
+    def hash
+      [position, direction].hash
+    end
+
+    def eql?(other)
+      self.hash == other.hash
     end
 
     class << self

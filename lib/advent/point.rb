@@ -15,6 +15,14 @@ module Advent
       Point.new(x - other.x, y - other.y)
     end
 
+    def *(scalar)
+      Point.new(x * scalar, y * scalar)
+    end
+
+    def opposite
+      Point.new(-x, -y)
+    end
+
     def x_in_range?(range)
       range.cover?(x)
     end
@@ -41,6 +49,16 @@ module Advent
 
     def eql?(other)
       self.hash == other.hash
+    end
+
+    class << self
+      def cardinal_directions
+        [N, E, S, W]
+      end
+
+      def cardinal_from(point)
+        cardinal_directions.map { |dir| point + dir }
+      end
     end
   end
 
