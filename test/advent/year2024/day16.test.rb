@@ -9,7 +9,7 @@ test "part 1" do
 end
 
 test "part 2" do
-  # expect(challenge.part2) == 0
+  expect(challenge.part2) == 45
 end
 
 # test "#origin" do

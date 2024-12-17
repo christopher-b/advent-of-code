@@ -8,9 +8,11 @@ require "advent/generator"
 
 # Helper classes
 require "advent/cursor"
+require "advent/graph"
 require "advent/grid"
 require "advent/math"
 require "advent/point"
+require "advent/priority_queue"
 require "advent/vector"
 
 module Advent
