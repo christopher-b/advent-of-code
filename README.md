@@ -10,24 +10,24 @@ This project includes some scaffolding around the challenges, including:
 
 ## [2024 Solutions](lib/advent/year2024) :star: × 32/50
 
-| Day                                    | Execution Time       |
-|----------------------------------------|---------------------:|
-| [Day 1](lib/advent/year2024/day01.rb)  |   4.09ms             |
-| [Day 2](lib/advent/year2024/day02.rb)  |   8.63ms             |
-| [Day 3](lib/advent/year2024/day03.rb)  |   1.87ms             |
-| [Day 4](lib/advent/year2024/day04.rb)  |  73.35ms             |
-| [Day 5](lib/advent/year2024/day05.rb)  |   9.46ms             |
-| [Day 6](lib/advent/year2024/day06.rb)  |    16.4s :grimacing: |
-| [Day 7](lib/advent/year2024/day07.rb)  |    2.19s             |
-| [Day 8](lib/advent/year2024/day08.rb)  |   8.22ms             |
-| [Day 9](lib/advent/year2024/day09.rb)  | 142.51ms             |
-| [Day 10](lib/advent/year2024/day10.rb) |  19.79ms             |
-| [Day 11](lib/advent/year2024/day11.rb) |  63.93ms             |
-| [Day 12](lib/advent/year2024/day12.rb) | 429.86ms             |
-| [Day 13](lib/advent/year2024/day13.rb) |   2.36ms             |
-| [Day 14](lib/advent/year2024/day14.rb) |  43.84ms             |
-| [Day 15](lib/advent/year2024/day15.rb) |  65.66ms             |
-| [Day 16](lib/advent/year2024/day16.rb) |  26.98s              |
+| Day                                    | Execution Time       | Stars           |
+|----------------------------------------|---------------------:|-----------------|
+| [Day 1](lib/advent/year2024/day01.rb)  |   4.09ms             | :star2: :star2: |
+| [Day 2](lib/advent/year2024/day02.rb)  |   8.63ms             | :star2: :star2: |
+| [Day 3](lib/advent/year2024/day03.rb)  |   1.87ms             | :star2: :star2: |
+| [Day 4](lib/advent/year2024/day04.rb)  |  73.35ms             | :star2: :star2: |
+| [Day 5](lib/advent/year2024/day05.rb)  |   9.46ms             | :star2: :star2: |
+| [Day 6](lib/advent/year2024/day06.rb)  |    16.4s :grimacing: | :star2: :star2: |
+| [Day 7](lib/advent/year2024/day07.rb)  |    2.19s             | :star2: :star2: |
+| [Day 8](lib/advent/year2024/day08.rb)  |   8.22ms             | :star2: :star2: |
+| [Day 9](lib/advent/year2024/day09.rb)  | 142.51ms             | :star2: :star2: |
+| [Day 10](lib/advent/year2024/day10.rb) |  19.79ms             | :star2: :star2: |
+| [Day 11](lib/advent/year2024/day11.rb) |  63.93ms             | :star2: :star2: |
+| [Day 12](lib/advent/year2024/day12.rb) | 429.86ms             | :star2: :star2: |
+| [Day 13](lib/advent/year2024/day13.rb) |   2.36ms             | :star2: :star2: |
+| [Day 14](lib/advent/year2024/day14.rb) |  43.84ms             | :star2: :star2: |
+| [Day 15](lib/advent/year2024/day15.rb) |  65.66ms             | :star2: :star2: |
+| [Day 16](lib/advent/year2024/day16.rb) |  26.98s              | :star2: :star2: |
 
 ## [2023 Solutions](lib/advent/year2023) :star: × 27/50
 
