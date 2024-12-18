@@ -3,11 +3,11 @@ challenge = Advent::Challenge.get_with_sample(year: 2024, day: 17)
 Computer = challenge.class.const_get(:Computer)
 
 test "part 1" do
-  # assert_equal "4,6,3,5,6,3,5,2,1,0", challenge.part1
+  assert_equal "4,6,3,5,6,3,5,2,1,0", challenge.part1
 end
 
 test "part 2" do
-  # expect(challenge.part2) == 117440
+  # assert_equal 117440, challenge.part2
 end
 
 test "samples" do

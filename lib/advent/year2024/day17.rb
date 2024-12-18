@@ -2,13 +2,37 @@
 module Advent
   module Year2024
     class Day17 < Advent::Challenge
-      # Explanation here
+      # Part 1 was very simple. Part 2 was challenging but very interesting.
+      # Help from https://www.youtube.com/watch?v=y-UPxMAh2N8
 
       def part1
         computer.run.output
       end
 
       def part2
+        find(instructions, instructions[-1])
+      end
+
+      # This simulates the program
+      # We start by running our code to determine what `a` would need to be to be to get the last answer
+      # We recurse from there to find the fianl result
+      def find(program, answer)
+        return answer if program.empty?
+
+        (0...8).each do |t|
+          a = answer << 3 | t
+          b = a % 8  # 2,4
+          b ^= 1  # 1,1
+          c = a >> b # 7,5
+          b ^= 5  # 1,5
+          b ^= c  # 4,1
+          if b % 8 == program[-1]
+            subanswer = find(program[...-1], a)
+            next if subanswer.nil?
+            return subanswer
+          end
+        end
+        nil
       end
 
       def registers
@@ -89,7 +113,7 @@ module Advent
         def adv(operand) = registers[:a] = registers[:a] >> combo(operand)
 
         # OPCODE 1
-        def bxl(operand) = registers[:b] = registers[:b] ^ operand
+        def bxl(operand) = registers[:b] ^= operand
 
         # OPCODE 2
         def bst(operand) = registers[:b] = combo(operand) % 8
@@ -98,7 +122,7 @@ module Advent
         def jnz(operand) = (@instruction_pointer = operand unless registers[:a] == 0)
 
         # OPCODE 4
-        def bxc(_operand) = registers[:b] = registers[:b] ^ registers[:c]
+        def bxc(_operand) = registers[:b] ^= registers[:c]
 
         # OPCODE 5
         def out(operand) = @output << combo(operand) % 8
