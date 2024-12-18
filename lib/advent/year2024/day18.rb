@@ -21,25 +21,22 @@ module Advent
       def part2
         # Let's to a binary search
         search_min = SAMPLE # We know we have a path with this many bytes
-        search_max = bytes.size # This is smaller than the maximum number of bytes that still leaves a path
+        search_max = bytes.size - 1 # This is smaller than the maximum number of bytes that still leaves a path
         first_nil = nil
 
         while search_min < search_max
           mid = (search_min + search_max) / 2
-          corrupted = Set.new(bytes[..mid])
+          corrupted = Set.new(bytes[..mid + 1])
 
           if walk(corrupted).nil?
             first_nil = mid
-            search_max = mid - 1
+            search_max = mid
           else
             search_min = mid + 1
           end
         end
 
-        # Account for off-by-one
-        odd_offset = bytes.size.odd? ? 0 : 1
-        bad_byte = bytes[first_nil - odd_offset]
-
+        bad_byte = bytes[first_nil + 1]
         "#{bad_byte.x},#{bad_byte.y}"
       end
 
