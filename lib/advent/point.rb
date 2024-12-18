@@ -15,12 +15,20 @@ module Advent
       Point.new(x - other.x, y - other.y)
     end
 
-    def *(scalar)
-      Point.new(x * scalar, y * scalar)
+    def *(other)
+      Point.new(x * other, y * other)
     end
 
     def opposite
       Point.new(-x, -y)
+    end
+
+    def cardinal_neighbors
+      [N, E, S, W].map { |dir| self + dir }
+    end
+
+    def diagonal_neighbors
+      [Point.new(x + 1, y - 1), Point.new(x + 1, y + 1), Point.new(x - 1, y + 1), Point.new(x - 1, y - 1)]
     end
 
     def x_in_range?(range)

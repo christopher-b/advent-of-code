@@ -1,8 +1,9 @@
 # From https://www.brianstorti.com/implementing-a-priority-queue-in-ruby/
 module Advent
   class PriorityQueue
-    def initialize
+    def initialize(elements = [])
       @elements = [nil]
+      elements.each { |element| self << element }
     end
 
     def empty?
