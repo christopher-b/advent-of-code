@@ -5,11 +5,6 @@ module Advent
       # Another fairly straightforward one.
       # We can use a recursive function to check all possible designs, reducing the string by one each time
 
-      def initialize(...)
-        super
-        @design_cache = {}
-      end
-
       def part1
         design_counts.count { |count| count > 0 }
       end
@@ -19,29 +14,18 @@ module Advent
       end
 
       def design_counts
-        @design_counts ||= designs.map { |design| design_possible?(design) }
+        @design_cache ||= {}
+        @design_counts ||= designs.map { |design| design_possible(design) }
       end
 
-      def design_possible?(design)
-        return @design_cache[design] if @design_cache.has_key?(design)
-
-        if design.empty?
-          @design_cache[design] = 1
-          return 1
-        end
-
-        count = 0
-
-        (design.size + 1).times do |i|
-          prefix, suffix = design[...i], design[i..]
-
-          if towels.include?(prefix)
-            count += design_possible?(suffix)
+      def design_possible(design)
+        @design_cache[design] ||= if design.empty?
+          1
+        else
+          towels.select { |t| design.start_with?(t) }.reduce(0) do |count, towel|
+            count + design_possible(design[towel.size..])
           end
         end
-
-        @design_cache[design] = count
-        count
       end
 
       def designs
@@ -49,7 +33,7 @@ module Advent
       end
 
       def towels
-        @towels ||= input_chunks[0].split(", ")
+        @towels ||= input_chunks[0].split(", ").sort_by(&:size).reverse
       end
     end
   end

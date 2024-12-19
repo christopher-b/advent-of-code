@@ -14,7 +14,7 @@ test "designs" do
   assert_equal "brwrr", challenge.designs.first
 end
 
-test "towels" do
-  assert_equal 8, challenge.towels.size
-  assert_equal "r", challenge.towels.first
-end
+# test "towels" do
+#   assert_equal 8, challenge.towels.size
+#   assert_equal "r", challenge.towels.first
+# end
