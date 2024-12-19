@@ -3,7 +3,9 @@ module Advent
   module Year2024
     class Day19 < Advent::Challenge
       # Another fairly straightforward one.
-      # We can use a recursive function to check all possible designs, reducing the string by one each time
+      # We can use a recursive function to check all possible designs.
+      # For each design, iterate the list of towels that match a design prefix.
+      # Recurse with the remaining design string.
 
       def part1
         design_counts.count { |count| count > 0 }
