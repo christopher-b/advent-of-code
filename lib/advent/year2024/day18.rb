@@ -4,6 +4,8 @@ module Advent
     class Day18 < Advent::Challenge
       # This solution reused the Dijsktra's walk from Day 16.
       # Part 2 is a simple binary search. I'm glad I could get this one without help.
+      # Folks on the subreddit suggesting optimzing by only recalculating when the byte falls on the path.
+      # Also, different pathfinding algorithms could be used, like A* or BFS, as this in not a weighted graph.
 
       # Sample:
       # GRID_MAX = 6

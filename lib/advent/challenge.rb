@@ -32,6 +32,10 @@ module Advent
       @input_file.rewind
     end
 
+    def input_chunks
+      @input_chunks ||= input_text.split("\n\n")
+    end
+
     class << self
       def run(year:, day:)
         get(year:, day:).call
