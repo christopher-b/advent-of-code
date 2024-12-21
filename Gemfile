@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "debug"
 gem "thor"
 gem "quickdraw", git: "https://github.com/joeldrapper/quickdraw.git"
 gem "guard"

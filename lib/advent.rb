@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
+require "debug"
 require "advent/benchmark"
 require "advent/cli"
 require "advent/challenge"

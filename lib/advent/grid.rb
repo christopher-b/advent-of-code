@@ -20,6 +20,13 @@ module Advent
       rows[y]
     end
 
+    def find_first_char(char)
+      each_char do |current_char, x, y|
+        return Point.new(x, y) if current_char == char
+      end
+      nil
+    end
+
     def each_point
       return to_enum(__method__) unless block_given?
       rows.each_with_index do |row, y|

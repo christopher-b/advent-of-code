@@ -41,7 +41,7 @@ module Advent
         get(year:, day:).call
       end
 
-      def run_with_sample(year: day)
+      def run_with_sample(year:, day:)
         get_with_sample(year:, day:).call
       end
 
