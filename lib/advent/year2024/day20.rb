@@ -5,13 +5,11 @@ module Advent
       # Explanation here
 
       def part1
-        shortcut_count
+        shortcut_count(2)
       end
 
       def part2
-        # 2203962 too high
-        # Not 1101981
-        shortcut_count_big_cheats
+        shortcut_count(20)
       end
 
       # Prepopulate a grid representing the distance from the origin to each path point
@@ -30,66 +28,45 @@ module Advent
         end
       end
 
-      def shortcut_count_big_cheats(cutoff = 100)
-        @shortcut_count_big_cheats ||= begin
-          count = 0
-          # Iterate the whole grid
-          maze.each_point do |start_point, char|
-            next if char == "#"
+      def shortcut_count(test_radius, cutoff = 100)
+        count = 0
+        # Iterate the whole grid
+        maze.each_point do |start_point|
+          next if is_wall?(start_point)
 
-            # Find all points within 20 of the start point
-            (2..20).each do |radius|
-              # For each radius, find all points by varying diff_row and diff_col
-              (0..radius).each do |diff_row|
-                diff_col = radius - diff_row
-                # Fid this point in all four quadrants around the start point
-                options = Set.new([
-                  start_point + Point.new(diff_col, diff_row),
-                  start_point + Point.new(diff_col, -diff_row),
-                  start_point + Point.new(-diff_col, diff_row),
-                  start_point + Point.new(-diff_col, -diff_row)
-                ])
-                options.each do |end_point|
-                  next unless maze.in_range?(end_point)
-                  next if maze.value_at(end_point) == "#"
-                  # We now have a valid shortcut. Check the distance it saves
-                  distance = distance_grid[end_point.y][end_point.x] - distance_grid[start_point.y][start_point.x]
-                  if distance >= cutoff + radius
-                    count += 1
-                  end
+          # Find all points within 20 of the start point
+          (2..test_radius).each do |radius|
+            # For each radius, find all points by varying row_delta and col_delta
+            (0..radius).each do |row_delta|
+              col_delta = radius - row_delta
+              point_in_quadrants(start_point, row_delta, col_delta).each do |end_point|
+                next unless maze.in_range?(end_point)
+                next if is_wall?(end_point)
+
+                # We now have a valid shortcut. Check the distance it saves
+                distance = distance_grid[end_point.y][end_point.x] - distance_grid[start_point.y][start_point.x]
+                if distance >= cutoff + radius
+                  count += 1
                 end
               end
             end
           end
-
-          count
         end
+
+        count
       end
 
-      def shortcut_count(cutoff = 100)
-        @shortcut_count ||= begin
-          count = 0
-          # Iterate the whole grid
-          maze.each_point do |start_point, char|
-            next if char == "#"
+      def point_in_quadrants(point, row_delta, col_delta)
+        Set.new([
+          point + Point.new(col_delta, row_delta),
+          point + Point.new(col_delta, -row_delta),
+          point + Point.new(-col_delta, row_delta),
+          point + Point.new(-col_delta, -row_delta)
+        ])
+      end
 
-            # Check the tile two spaces over
-            [
-              start_point + Point.new(2, 0),
-              start_point + Point.new(0, 2),
-            ].each do |end_point|
-              next unless maze.in_range?(end_point)
-              next if maze.value_at(end_point) == "#"
-
-              distance = distance_grid[end_point.y][end_point.x] - distance_grid[start_point.y][start_point.x]
-              if distance.abs >= cutoff + 2
-                count += 1
-              end
-            end
-          end
-
-          count
-        end
+      def is_wall?(point)
+        maze.value_at(point) == "#"
       end
 
       def maze
