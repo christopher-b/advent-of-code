@@ -4,12 +4,28 @@ module Advent
     class Day21 < Advent::Challenge
       # Explanation here
 
+      def initialize
+        super
+        @cache = {}
+      end
+
       def part1
         do_chain(2)
       end
 
       def part2
-        do_chain(25)
+        # do_chain(25)
+      end
+
+      def compute_length(x, y, depth = 2)
+        cached_value = @cache.dig(depth, x, y)
+        return cached_value if cached_value
+
+        if depth == 1
+          # Do sequence
+        else
+          result = compute_length(x, y, depth - 1) + compute_length(x, y, depth - 1)
+        end
       end
 
       def do_chain(chain_count)
