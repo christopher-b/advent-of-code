@@ -23,7 +23,27 @@ module Advent
       @adjacency_list[node1][node2]
     end
 
-    def shortest_path(start_node, end_node)
+    def bfs_paths(start_node, end_node)
+      queue = [[start_node]]
+      visited = Set.new [start_node]
+
+      while queue.any?
+        path = queue.shift
+        node = path.last
+
+        return path if node == end_node
+
+        @adjacency_list[node].keys.each do |neighbor|
+          next if visited.include?(neighbor)
+          visited << neighbor
+          queue << path + [neighbor]
+        end
+      end
+
+      nil
+    end
+
+    def dijsktra_path(start_node, end_node)
       # Validate nodes exist
       return nil unless @adjacency_list.key?(start_node) && @adjacency_list.key?(end_node)
 
