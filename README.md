@@ -32,6 +32,8 @@ This project includes some scaffolding around the challenges, including:
 | [Day 18](lib/advent/year2024/day18.rb) |  70.55ms             | :star2: :star2: |
 | [Day 19](lib/advent/year2024/day19.rb) | 378.9ms              | :star2: :star2: |
 | [Day 20](lib/advent/year2024/day20.rb) |  13.46s              | :star2: :star2: |
+| [Day 21](lib/advent/year2024/day21.rb) |                      | :star2:         |
+| [Day 22](lib/advent/year2024/day22.rb) |   3.72s              | :star2: :star2: |
 
 ## [2023 Solutions](lib/advent/year2023) :star: × 27/50
 
