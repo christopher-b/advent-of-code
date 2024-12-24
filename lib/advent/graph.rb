@@ -2,7 +2,8 @@ module Advent
   class Graph
     attr_accessor :adjacency_list
 
-    def initialize
+    def initialize(directed: true)
+      @directed = directed
       @adjacency_list = {}
     end
 
@@ -16,7 +17,11 @@ module Advent
 
     def add_edge(node1, node2, weight = 1)
       @adjacency_list[node1][node2] = weight
-      # @adjacency_list[node2][node1] = weight  # For undirected graph
+      @adjacency_list[node2][node1] = weight unless @directed
+    end
+
+    def neighbors(node)
+      @adjacency_list[node].keys
     end
 
     def edge_weight(node1, node2)
