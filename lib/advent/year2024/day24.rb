@@ -14,48 +14,23 @@ module Advent
       end
 
       def part2
-        # Z-gates are the output result bits. They should all be the same, except the last one which has different behavior.
-        # Inspection reveals that this should be an XOR, but there are outlies:
-        # z15: OR
-        # z23: AND
-        # z39: AND
-        #
-        # Go one level deeper, we should have input gates that are either OR or XOR
-        # z00: x00 (nil) y00 (nil)
-        # z01: wbd (AND) dqq (XOR) (wbd is baddy?)
-        # z05: rgq (OR) svm (AND) (rgq is baddy?)
-        # z15: dkk(AND) pbd (AND) (both bad, but we think z15 is bad so these may be right?)
-        # z16: kqk: (XOR) rbr (XOR) (either could be bad?)
-        # z23: x23 (nil) y23 (nil) ??
-        #
-        # Next level, we should have two nil operations and two ANDs
-        # ?? z01: nil * 4
-        # z06:
-        #   pdf/nbc: XOR
-        # ?? z15:
-        # ?? z16:
-        # z24:
-        #   ngq/cqg: XOR
-        #
-        # z15, z23, z39, wbd, rgq, (kqk || rbr), nbc, cqg
-        #
-        # ?? (dkk || pbd)
-
+        # Brute force. Try each swap and see if it furthers the progress.
         swaps = []
         4.times do
           baseline = progress
-          x_memo = y_memo = nil
+          x_memo = y_memo = nil # We need these to pull them out of the loop scope
+
           gates.values.each do |x|
             gates.values.each do |y|
               next if x == y
               next unless x.inputs && y.inputs
 
-              swap_gates(x, y)
+              x.swap(y)
               if progress > baseline
                 x_memo, y_memo = x, y
                 break
               end
-              swap_gates(x, y) # swap back
+              x.swap(y)
             end
 
             break if x_memo && y_memo
@@ -65,13 +40,6 @@ module Advent
         end
 
         swaps.map(&:name).sort.join(",")
-      end
-
-      def swap_gates(x, y)
-        # x.name, y.name = y.name, x.name
-        x.inputs[0], y.inputs[0] = y.inputs[0], x.inputs[0]
-        x.inputs[1], y.inputs[1] = y.inputs[1], x.inputs[1]
-        x.operation, y.operation = y.operation, x.operation
       end
 
       def z_gates
@@ -87,54 +55,10 @@ module Advent
         i
       end
 
-      def verify_z(gate, num)
-        x, y = gate.inputs
-        return false unless gate.xor?
-        return [x.name, y.name] == ["x00", "y00"] if num == 0
-
-        (verify_intermediate_xor(x, num) && verify_carry_bit(y, num)) \
-          || (verify_intermediate_xor(y, num) && verify_carry_bit(x, num))
-      end
-
-      def verify_intermediate_xor(gate, num)
-        x, y = gate.inputs
-        return false unless gate.xor?
-        [x, y].map(&:name).sort == [gname("x", num), gname("y", num)]
-      end
-
-      def verify_carry_bit(gate, num)
-        x, y = gate.inputs
-
-        if num == 1
-          return false if gate.operation != "AND"
-          return [x, y].sort.map(&:name) == ["x00", "y00"]
-        end
-
-        return false unless gate.operation == "OR"
-        (verify_direct_carry(x, num - 1) && verify_recarry(y, num - 1)) \
-          || (verify_direct_carry(y, num - 1) && verify_recarry(x, num - 1))
-      end
-
-      def verify_direct_carry(gate, num)
-        x, y = gate.inputs
-        return false unless gate.operation == "AND"
-        [x, y].sort.map(&:name) == [gname("x", num), gname("y", num)]
-      end
-
-      def verify_recarry(gate, num)
-        x, y = gate.inputs
-        return false unless gate.operation == "AND"
-
-        (verify_intermediate_xor(x, num) && verify_carry_bit(y, num)) \
-          || (verify_intermediate_xor(y, num) && verify_carry_bit(x, num))
-      end
-
       def verify(num)
         name = "z#{num.to_s.rjust(2, "0")}"
-        verify_z(gates[name], num)
+        gates[name].z?(num)
       end
-
-      def gname(char, num) = "#{char}#{num.to_s.rjust(2, "0")}"
 
       def pretty_print(gate, depth = 0)
         return "  " * depth + gate.name if gate.name.start_with?("x", "y")
@@ -173,11 +97,64 @@ module Advent
           name <=> other.name
         end
 
+        def swap(other)
+          @name, other.name = other.name, @name
+          @inputs, other.inputs = other.inputs, @inputs
+          @operation, other.operation = other.operation, @operation
+        end
+
+        def intermediate_xor?(num)
+          return false unless xor?
+          input_names == [gname("x", num), gname("y", num)]
+        end
+
+        def direct_carry?(num)
+          return false unless and?
+          input_names == [gname("x", num), gname("y", num)]
+        end
+
+        def carry_bit?(num)
+          if num == 1
+            return false unless and?
+            return input_names == ["x00", "y00"]
+          end
+
+          return false unless or?
+
+          (x.direct_carry?(num - 1) && y.recarry?(num - 1)) \
+            || (y.direct_carry?(num - 1) && x.recarry?(num - 1))
+        end
+
+        def recarry?(num)
+          return false unless and?
+
+          (x.intermediate_xor?(num) && y.carry_bit?(num)) \
+            || (y.intermediate_xor?(num) && x.carry_bit?(num))
+        end
+
+        def z?(num)
+          return false unless xor?
+          return input_names == ["x00", "y00"] if num == 0
+
+          (x.intermediate_xor?(num) && y.carry_bit?(num)) \
+            || (y.intermediate_xor?(num) && x.carry_bit?(num))
+        end
+
+        def input_names
+          inputs.map(&:name).sort
+        end
+
+        def gname(char, num) = "#{char}#{num.to_s.rjust(2, "0")}"
+
         def xor? = operation == "XOR"
 
         def and? = operation == "AND"
 
         def or? = operation == "OR"
+
+        def x = inputs[0]
+
+        def y = inputs[1]
 
         def value
           return @value if @value
