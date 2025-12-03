@@ -1,0 +1,4 @@
+ignore:
+- 'Guardfile'
+- 'db/fixtures/**/*'
+- 'db/migrate/**/*'

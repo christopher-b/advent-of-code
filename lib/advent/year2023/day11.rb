@@ -72,4 +72,3 @@ module Advent
     end
   end
 end
-

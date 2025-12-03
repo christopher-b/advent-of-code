@@ -21,10 +21,10 @@ module Advent
       puts ""
       puts "Execution time: #{(execution_time * 1000).round(2)}ms"
 
-      memory_profile = MemoryProfiler.report do
-        Challenge.run(year:, day:)
-      end
-      puts "Memory usage: #{(memory_profile.total_allocated_memsize.to_f / 1024 / 1024).round(2)}mb"
+      # memory_profile = MemoryProfiler.report do
+      #   Challenge.run(year:, day:)
+      # end
+      # puts "Memory usage: #{(memory_profile.total_allocated_memsize.to_f / 1024 / 1024).round(2)}mb"
     end
 
     desc "init YEAR DAY", "Initialize a new day's challenge"
@@ -35,8 +35,8 @@ module Advent
 
     desc "benchmark YEAR DAY", "Run the benchmark suite. If day is omitted, run all days"
     def benchmark(year, day = nil)
-      Advent::Benchmark.new(year, day).run
-      # Advent::Benchmark.new(year, day).stackprof
+      # Advent::Benchmark.new(year, day).run
+      Advent::Benchmark.new(year, day).stackprof
     end
   end
 end
