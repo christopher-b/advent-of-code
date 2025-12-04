@@ -3,6 +3,7 @@ module Advent
   module Year2025
     class Day02 < Advent::Challenge
       # We use a string rotation trick to quickly determine if a string is periodic.
+      # This filters candidates for part 1 to speed it up.
 
       def part1
         invalid_ids.sum
@@ -38,6 +39,8 @@ module Advent
       def is_periodic?(s)
         return false if s.empty?
         # If s is periodic, then s appears in s+s (excluding trivial match)
+        # abcabc -> abcabcabcabc -> bcabcabcab
+        #                             ~~~~~~
         (s + s)[1...-1].include?(s)
       end
 
