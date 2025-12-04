@@ -56,7 +56,7 @@ module Advent
     end
 
     def eql?(other)
-      self.hash == other.hash
+      hash == other.hash
     end
 
     class << self

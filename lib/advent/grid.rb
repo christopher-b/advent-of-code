@@ -50,6 +50,11 @@ module Advent
       rows[position.y][position.x]
     end
 
+    def set_value_at(position, value)
+      raise OutOfRangeError unless in_range?(position)
+      rows[position.y][position.x] = value
+    end
+
     # Returns point in order: NESW
     def adjacent_points_in_range(point)
       [
