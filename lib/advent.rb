@@ -9,6 +9,7 @@ require "advent/generator"
 
 # Helper classes
 require "advent/cursor"
+require "advent/disjoint_set"
 require "advent/graph"
 require "advent/grid"
 require "advent/math"
