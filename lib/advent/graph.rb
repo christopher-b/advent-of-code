@@ -50,8 +50,18 @@ module Advent
     # @param weight [Numeric] The edge weight (default: 1)
     # @return [Numeric] The weight that was set
     def add_edge(node1, node2, weight = 1)
+      add_node(node1)
+      add_node(node2)
       @adjacency_list[node1][node2] = weight
       @adjacency_list[node2][node1] = weight unless @directed
+    end
+
+    # Checks if a node exists in the graph.
+    #
+    # @param node [Object] The node to check for
+    # @return [Boolean] true if the node exists, false otherwise
+    def has_node?(node)
+      @adjacency_list.key?(node)
     end
 
     # Returns the neighbors of a node.
@@ -60,6 +70,38 @@ module Advent
     # @return [Array] Array of neighbor node values
     def neighbors(node)
       @adjacency_list[node].keys
+    end
+
+    # Returns all nodes reachable from a given node (recursive neighbors).
+    # Performs a depth-first traversal to find all connected nodes.
+    #
+    # @param node [Object] The starting node
+    # @param max_depth [Integer, nil] Maximum depth to traverse (nil for unlimited)
+    # @return [Set] Set of all reachable node values (excluding the start node)
+    # @example
+    #   graph.recursive_neighbors("A")  # => #<Set: {"B", "C", "D"}>
+    #   graph.recursive_neighbors("A", max_depth: 1)  # => #<Set: {"B", "C"}>
+    def connected_nodes(node, max_depth: nil)
+      visited = Set.new
+      queue = [[node, 0]]
+
+      while queue.any?
+        current, depth = queue.shift
+        next if visited.include?(current)
+
+        visited << current
+
+        # Skip exploring neighbors if we've reached max depth
+        next if max_depth && depth >= max_depth
+
+        @adjacency_list[current].keys.each do |neighbor|
+          queue << [neighbor, depth + 1] unless visited.include?(neighbor)
+        end
+      end
+
+      # Remove the starting node from the result
+      visited.delete(node)
+      visited
     end
 
     # Returns the weight of an edge between two nodes.
@@ -121,7 +163,7 @@ module Advent
 
       # Set all distances to infinity except start node
       @adjacency_list.keys.each do |node|
-        distances[node] = (node == start_node) ? 0 : Float::INFINITY
+        distances[node] = node == start_node ? 0 : Float::INFINITY
         unvisited[node] = true
       end
 
