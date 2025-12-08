@@ -57,7 +57,7 @@ module Advent
     # @return [Boolean] Always returns true
     def generate_challenge
       challenge_path = day_info.challenge_path
-      logger.info "Generating challenge at #{challenge_path}"
+      logger.info "Generating challenge at\n\t#{challenge_path}"
 
       File.write(challenge_path, challenge_template)
       true
@@ -68,7 +68,7 @@ module Advent
     # @return [Boolean] Always returns true
     def generate_test
       test_path = day_info.test_path
-      logger.info "Generating test at #{test_path}"
+      logger.info "Generating test at\n\t#{test_path}"
 
       File.write(test_path, test_template)
       true
@@ -78,7 +78,7 @@ module Advent
     #
     # @return [Boolean] Always returns true
     def generate_input
-      logger.info "Generating input files at #{day_info.input_path} and #{day_info.sample_input_path}"
+      logger.info "Generating input files at\n\t#{day_info.input_path}\n\t#{day_info.sample_input_path}"
 
       FileUtils.touch(day_info.sample_input_path)
       input_downloader.download
@@ -168,14 +168,23 @@ module Advent
     end
 
     # Validates that the session cookie is present.
+    # Prompts user to enter the cookie if not found in environment.
     #
     # @return [void]
-    # @raise [MissingSessionCookieError] If session cookie is not found
     def validate_session_cookie
       return if session_cookie
 
-      logger.error "No session cookie found"
-      raise MissingSessionCookieError, "Please set AOC_SESSION in env"
+      logger.warn "No AOC_SESSION found in environment"
+      print "Please enter your Advent of Code session cookie: "
+      user_input = $stdin.gets&.chomp
+
+      if user_input && !user_input.empty?
+        set_session_cookie(user_input)
+        logger.info "Session cookie set successfully"
+      else
+        logger.error "No session cookie provided"
+        raise MissingSessionCookieError, "Session cookie is required to download input"
+      end
     end
 
     # Constructs the URL for downloading input.
@@ -204,6 +213,10 @@ module Advent
     # @return [String, nil] The session cookie or nil if not set
     def session_cookie
       ENV["AOC_SESSION"]
+    end
+
+    def set_session_cookie(cookie)
+      ENV["AOC_SESSION"] = cookie
     end
   end
 
