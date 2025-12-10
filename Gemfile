@@ -9,3 +9,4 @@ gem "ruby-lsp"
 gem "standard"
 gem "memory_profiler"
 gem "stackprof"
+gem "z3", require: false

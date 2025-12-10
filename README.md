@@ -11,16 +11,18 @@ This project includes some scaffolding around the challenges, including:
 
 ## [2025 Solutions](lib/advent/year2025) :star: × 16/16
 
-| Day                                   | Execution Time | Stars           |
-| ------------------------------------- | -------------: | --------------- |
-| [Day 1](lib/advent/year2025/day01.rb) |        11.22ms | :star2: :star2: |
-| [Day 2](lib/advent/year2025/day02.rb) |       875.22ms | :star2: :star2: |
-| [Day 3](lib/advent/year2025/day03.rb) |         8.70ms | :star2: :star2: |
-| [Day 4](lib/advent/year2025/day04.rb) |       917.47ms | :star2: :star2: |
-| [Day 5](lib/advent/year2025/day05.rb) |        12.45ms | :star2: :star2: |
-| [Day 6](lib/advent/year2025/day06.rb) |        12.30ms | :star2: :star2: |
-| [Day 7](lib/advent/year2025/day07.rb) |         8.39ms | :star2: :star2: |
-| [Day 8](lib/advent/year2025/day08.rb) |       202.69ms | :star2: :star2: |
+| Day                                    | Execution Time | Stars           |
+| -------------------------------------- | -------------: | --------------- |
+| [Day 1](lib/advent/year2025/day01.rb)  |        11.22ms | :star2: :star2: |
+| [Day 2](lib/advent/year2025/day02.rb)  |       875.22ms | :star2: :star2: |
+| [Day 3](lib/advent/year2025/day03.rb)  |         8.70ms | :star2: :star2: |
+| [Day 4](lib/advent/year2025/day04.rb)  |       917.47ms | :star2: :star2: |
+| [Day 5](lib/advent/year2025/day05.rb)  |        12.45ms | :star2: :star2: |
+| [Day 6](lib/advent/year2025/day06.rb)  |        12.30ms | :star2: :star2: |
+| [Day 7](lib/advent/year2025/day07.rb)  |         8.39ms | :star2: :star2: |
+| [Day 8](lib/advent/year2025/day08.rb)  |       202.69ms | :star2: :star2: |
+| [Day 9](lib/advent/year2025/day09.rb)  |                | :star2:         |
+| [Day 10](lib/advent/year2025/day10.rb) |       381.48ms | :star2: :star2: |
 
 ## [2024 Solutions](lib/advent/year2024) :star: × 48/50
 
