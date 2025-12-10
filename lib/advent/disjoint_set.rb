@@ -41,9 +41,8 @@ class DisjointSet
   # @param x [Object] The element to find the root for
   # @return [Object] The root element of the set containing x
   def find_root(x)
-    @parent[x] = find_root(@parent[x]) if @parent[x] != x
-
-    @parent[x]
+    return x if x == @parent[x]
+    @parent[x] = find_root(@parent[x])
   end
 
   # Merges the sets containing x and y.
