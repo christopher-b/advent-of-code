@@ -8,3 +8,9 @@ end
 test "part 2" do
   assert_equal 24, challenge.part2
 end
+
+# test "corners" do
+#   pp challenge.perimeter_corners
+# end
+#
+# pp challenge.perimeter_segments

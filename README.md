@@ -21,7 +21,7 @@ This project includes some scaffolding around the challenges, including:
 | [Day 6](lib/advent/year2025/day06.rb)  |        12.30ms | :star2: :star2: |
 | [Day 7](lib/advent/year2025/day07.rb)  |         8.39ms | :star2: :star2: |
 | [Day 8](lib/advent/year2025/day08.rb)  |       202.69ms | :star2: :star2: |
-| [Day 9](lib/advent/year2025/day09.rb)  |                | :star2:         |
+| [Day 9](lib/advent/year2025/day09.rb)  |      5587.67ms | :star2: :star2: |
 | [Day 10](lib/advent/year2025/day10.rb) |       381.48ms | :star2: :star2: |
 
 ## [2024 Solutions](lib/advent/year2024) :star: × 48/50
